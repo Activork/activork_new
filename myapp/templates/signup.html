@@ -1,0 +1,170 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<noscript>
+
+<meta http-equiv="refresh" content="0;url=common/js.htm">
+
+<meta name="google-translate-customization" content="1121bf4f2acd5ff-6e941d90591bf19b-gd5d57505b80b0941-1d">
+
+
+
+</meta>
+
+</noscript>
+
+<title>activork</title>
+
+<!--[if lte IE 7]><meta http-equiv="refresh" content="0; url=common/ie_block.htm" /><![endif]-->
+
+
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+
+
+<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"/>
+
+</head>
+
+<body class="login_page_activork">
+
+<div class="login_page">
+
+  <div class="container">
+
+      <div class="row">
+
+          <div class="inner_content_login">
+
+             <div class="headder_login col-sm-12">
+
+                <div class="logo col-sm-6">
+
+                <img src="{% static 'images/logo.png' %}" />
+
+                </div>
+		{% if login_form.errors %}
+    			<ul class='form-errors' style= "color:white">
+        			{% for i,j in login_form.errors.items %}
+            			<li>{{j}}</li>
+       				 {% endfor %}
+    			</ul>
+		{% endif %}
+
+		<form  method="POST" action="{% url 'account_login' %}">
+  		{% csrf_token %}
+                <div class="login_form col-sm-6">
+
+                   <div class="login_name">
+
+                     {{login_form.login}}
+
+                     <span>{{login_form.remember}}Keep me Logged in</span>
+
+                   </div>
+
+                   <div class="login_name">
+
+                   {{login_form.password}}
+
+                    <span><a class="button secondaryAction" href="{% url 'account_reset_password' %}">Forgot Password?</a></span>
+
+                   </div>
+			
+			{% if redirect_field_value %}
+  			<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  			{% endif %}
+
+                   <button type="submit" class="login">LOG IN</button>
+		</form>
+
+               
+
+                
+
+               
+
+                </div>
+
+             </div>
+
+             <div class="info_form">
+
+                <div class="col-sm-4 map">
+
+                   <h1>Make <span>Connection</span> </h1>
+
+                   <h1>that <span>Matters</span></h1>
+
+                </div>
+
+                <div class="col-sm-4"></div>
+
+                <div class="side_form col-sm-4">
+
+                   <h1> CREATE ACCOUNT</h1>
+
+			
+
+				   <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+
+					
+
+
+					{% csrf_token %}
+		
+					{{form}}
+					{% if redirect_field_value %}
+  				<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  					{% endif %}
+
+                   
+		<p>By clicking Create an account, you agree to our Terms and that you have read our Data Policy, including our Cookie Use.</p>
+                   <button class="sign_in">SIGN UP</button>
+                   <div class="via_facebook">
+                       <p>VIA
+                       <span><a href="/login/facebook/"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></span>
+                       <span><a href="/login/linkedin-oauth2/"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></span>
+                        </p>
+                    </div>
+
+
+                </div>
+
+             </div>
+
+          </div>
+
+      </div>
+
+  </div>
+
+</div>
+
+
+
+<script src="{% static 'js/jquery1.9.1.js' %}"></script> 
+
+<script src="{% static 'js/bootstrap.js' %}"></script> 
+
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+</body>
+
+</html>
