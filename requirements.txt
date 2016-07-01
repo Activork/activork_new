@@ -1,2 +1,16 @@
+Django==1.7
+django-allauth==0.25.2
+django-appconf==1.0.1
+django-image-cropping==1.0.3
+django-notifications==0.1.dev0
+easy-thumbnails==2.3
 gunicorn==19.6.0
+oauthlib==1.1.2
+Pillow==3.2.0
+PyJWT==1.4.0
+python-openid==2.2.5
+python-social-auth==0.2.19
+requests==2.10.0
+requests-oauthlib==0.6.1
+six==1.10.0
 wheel==0.24.0
