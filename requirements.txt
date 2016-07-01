@@ -1,6 +1,7 @@
 Django==1.7
 django-allauth==0.25.2
 django-appconf==1.0.1
+django-geoposition==0.2.3
 django-image-cropping==1.0.3
 django-notifications==0.1.dev0
 easy-thumbnails==2.3
