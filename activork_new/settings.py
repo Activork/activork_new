@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'easy_thumbnails',
     'image_cropping',
 )
