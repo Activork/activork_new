@@ -90,9 +90,9 @@ INSTALLED_APPS = (
     'multiselectfield',
     'django_social_app',
     'social.apps.django_app.default',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    #'allauth',
+    #'allauth.account',
+    #'allauth.socialaccount',
     'easy_thumbnails',
     'image_cropping',
 )
