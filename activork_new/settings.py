@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'z^kkm53wo-!5=0khs7v(qpx66-gu4*(m2u0y!8q1@%r!g$=e@t'
-
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyAAxeABeKFSGuexhfPIWxDd5bWhg57IUsI'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
