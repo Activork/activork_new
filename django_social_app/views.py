@@ -5,7 +5,15 @@ from django.contrib.auth.decorators import login_required
 from django.template.context import RequestContext
 from notifications.signals import notify
 from .models import MyUser
+from allauth.account.views import SignupView, LoginView
 
+
+class MySignupView(SignupView):
+    template_name = 'my_signup.html'
+
+
+class MyLoginView(LoginView):
+    template_name = 'my_login.html'
 
 def login(request):
     return render(request,'login.html')
