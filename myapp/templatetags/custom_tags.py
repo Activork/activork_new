@@ -1,6 +1,6 @@
 from django import template
 register = template.Library()
-from entities.models import UserProfile
+from myapp.models import UserProfile
 import os
 
 def decode_choices(intent):
