@@ -145,7 +145,7 @@
         <a style="color:#fca633;" class="save_info about_profile_save01" href="javascript:void(0)">Save</a>
      </div>
       <ul>
-	{% for i in user_info.intent|decode_choices %}
+	{% for i in user_info.channels|decode_choices %}
         <li><p>{{i}}</p></li>
 	{% endfor %}
        </ul>
