@@ -17,7 +17,7 @@ def self_profile(request):
 	else:
 		check_social_acc = UserSocialAuth.objects.filter(user=request.user).exists()
 		if not check_social_acc:
-			current_user = UserProfile(user=request.user,profile_image="profile_photos/defaultuser.png",designation="",user_type_id=1)
+			current_user = UserProfile(user=request.user,profile_image="profile_photos/defaultuser.png",designation="")
 			current_user.save()
 			crop_obj = Upload_Image(user=request.user,image="profile_photos/defaultuser.png")
 			crop_obj.save()
@@ -42,7 +42,7 @@ def self_profile(request):
 			social_obj.user.last_name = last_name
 			social_obj.user.save()	
 
-			current_user = UserProfile(user=request.user,profile_image="profile_photos/img"+str(request.user.id)+".png",designation="",user_type_id=1)
+			current_user = UserProfile(user=request.user,profile_image="profile_photos/img"+str(request.user.id)+".png",designation="")
 			current_user.save()
 			crop_obj = Upload_Image(user=request.user,image="profile_photos/img"+str(request.user.id)+".png")
 			crop_obj.save()
