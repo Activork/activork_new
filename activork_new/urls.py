@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^$', 'django_social_app.views.login'),
     url(r'^home/$', 'django_social_app.views.home'),
     url(r'^logout/$', 'django_social_app.views.logout'),
+    url(r'^self_profile/$','myapp.views.self_profile',name='self_profile'),
    
 )
 

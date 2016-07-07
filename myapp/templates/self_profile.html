@@ -1,0 +1,1095 @@
+{% load custom_tags %}
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load cropping %}
+{% load thumbnail %}
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<noscript>
+<meta http-equiv="refresh" content="0;url=common/js.htm">
+<meta name="google-translate-customization" content="1121bf4f2acd5ff-6e941d90591bf19b-gd5d57505b80b0941-1d">
+
+</meta>
+</noscript>
+{{form.media}}
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<title>activork</title>
+<!--[if lte IE 7]><meta http-equiv="refresh" content="0; url=common/ie_block.htm" /><![endif]-->
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+<link rel="icon" href="{% static 'images/febric_icon.png' %}" type="image/x-icon"/>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"/>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+   <div class="container">
+     <div class="logo">
+        <img src="{% static 'images/logo.png' %}" />
+        
+     </div>
+     <div class="right_hedcontent">
+       <ul>
+           <li>
+              <a href="/self_profile/"><p style="background:rgba(0, 0, 0, 0) url('{% thumbnail image.image 430x360 box=image.cropping crop detail %}') no-repeat scroll 1px 0 / 100% auto"class="profile"></p></a>
+              <span>{{user_info.user.first_name|title}}</span>
+           </li>
+           <li>
+             <a href="/landing/"> <img  src="{% static 'images/icon6.png' %}" /><span class="label_page">Hangouts Listings</span></a>
+           </li>
+            <li>
+             <a href="/regular_suggestion/{{get_next_id}}/"> <img src="{% static 'images/icon1.png' %}" /><span class="label_page">Regular Suggestion</span></a>
+              
+           </li>
+            <li >
+              <a href="/my_hangouts/"><img src="{% static 'images/icon2.png' %}" /><span class="label_page">My Hangouts</span></a>
+              
+           </li>
+            <li>
+             <a href="/messages/"> <img src="{% static 'images/icon5.png' %}" /><span class="label_page">Messages</span></a>
+              
+           </li>
+            <li>
+              <a href="/notifications/"><img src="{% static 'images/icon4.png' %}" /><span class="label_page">Notification</span></a>
+           </li>
+           <li class="setting">
+             <a href="#"> <img src="{% static 'images/icon7.png' %}" /></a>
+             <span class="label_page">Notification</span>
+             <div class="setting_information">
+        <div class="arrow-setting"></div>
+         <ul>
+           <li style="border:none; margin:0"><a href="/settings/">Setting</a></li>
+           <li><a href="#">Logout</a></li>
+         </ul>
+       </div>
+           </li>
+          
+       </ul>
+     </div> 
+   </div>
+</div>
+<div class="banner_profile">
+ <div class="container">
+ <div class="search_hangout setting_surch">
+ <form>
+     <select class="loc">
+     <option>LOCATION</option>
+     <option>LOCATION01</option>
+     <option>LOCATION02</option>
+     <option>LOCATION03</option>
+     </select>
+     <select class="hang">
+     <option>SEARCH HANGOUT</option>
+     <option>SEARCH HANGOUT</option>
+     <option>SEARCH HANGOUT</option>
+     <option>SEARCH HANGOUT</option>
+     </select>
+     
+     <button class="search"><i class="fa fa-search" aria-hidden="true"></i></button>
+  </form>   
+ </div>
+ <div class="profile_information">
+ <div class="col-sm-3">
+      <div class="profile_img_clint">
+       <img src="{% cropped_thumbnail image "cropping" scale=0.5 %}" />
+       <div class="upload_profile_photo">
+       <i class="fa fa-camera" aria-hidden="true"></i><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Upload Image</button>
+            
+       </div>
+      </div>
+  </div>
+  <div class="col-sm-4">
+   <div class="clint_about">
+   <div>
+      <h1>{{user_info.user.first_name|title}}</h1>
+	<form method="post" action="/edit_user_details/first_name/" >
+	{% csrf_token %}
+       <input class="name_clint01" name="first_name" type="text" placeholder="name" />
+        <a class="edit_info name01" href="javascript:void(0)"><i class="fa fa-pencil" aria-hidden="true"></i>EDIT </a>
+	
+
+        <a style="color:#fca633;" class="save_info name_save01" href="javascript:void(0)"><button type="submit">Save</button></a>
+	</form>
+    </div>
+    <div>
+      <span>{{user_info.age}}, {{user_info.designation|title}}</span>
+	<form method="post" action="/edit_user_details/designation/" >
+	{% csrf_token %}
+      <input class="profile01" name="designation" type="text" placeholder="profle" />
+        <a class="edit_info job_profile01" href="javascript:void(0)"><i class="fa fa-pencil" aria-hidden="true"></i>EDIT </a>
+
+        <a style="color:#fca633;" class="save_info job_profile_save01" href="javascript:void(0)"><button type="submit">Save</button></a>
+	</form>
+    </div>
+    <div class="clint_feedback">
+      <p>{{user_info.status}}</p>
+       <textarea class="text_info01" placeholder="info" /></textarea>
+       <div class="clint_edit_profile">
+     
+     <ul>
+	{% for i in user_info.MY_CHOICES %}
+        <li>{{i.1}}</li>
+        
+	{% endfor %}
+     </ul>
+    
+   </div>
+        <a class="edit_info about_profile01" href="javascript:void(0)"><i class="fa fa-pencil" aria-hidden="true"></i>EDIT </a>
+        <a style="color:#fca633;" class="save_info about_profile_save01" href="javascript:void(0)">Save</a>
+     </div>
+      <ul>
+	{% for i in user_info.intent|decode_choices %}
+        <li><p>{{i}}</p></li>
+	{% endfor %}
+       </ul>
+     
+      <div class="icon_mobile_view">
+         <ul>
+             <li class="select"><a href="#"><img src="{% static 'images/mobile_icon01.png' %}" /></a></li>
+             <li class="next_select"><a href="#"><img src="{% static 'images/mobile_icon03.png' %}" /></a></li>
+             <li class="delete_profile"><a href="#"><img src="{% static 'images/mobile_icon02.png' %}" /></a></li>
+         </ul>
+      </div>
+      
+   </div>
+   
+  </div> 
+  <!--<div class="col-sm-5 icon_profile_content">
+           <button class="save_cheng">Save Changes</button>
+           <a class="edit_profile" href="javascript:void(0)"><i class="fa fa-pencil" aria-hidden="true"></i>EDIT PROFILE</a>
+            
+      </div>-->
+ </div>
+ </div>
+</div>
+<div class="content_inr profile_content_clint">
+  <div class="myprofile_tab col-sm-3">
+    <ul class="tab_filter">
+      <li class="active"><a href="/self_profile/"><img 
+src="{% thumbnail image.image 430x360 box=image.cropping crop detail %}" /><p>My Profile</p></a></li>
+      <li><a href="/my_hangout/"><img src="{% static 'images/left_icon2.png' %}" /><p>My Hangouts</p></a></li>
+      <li><a href="/landing_page/"><img src="{% static 'images/left_icon3.png' %}" /><p>Hangouts Listings</p></a></li>
+       <li><a href="/regular_suggestion/{{get_next_id}}/"><img src="{% static 'images/left_icon4.png' %}" /><p>Regular Suggestion</p></a></li>
+      <li><a href="/messages/"><img src="{% static 'images/left_icon5.png' %}" /><p>Messages</p></a></li>
+      <li><a href="/notifications/"><img src="{% static 'images/left_icon6.png' %}" /><p>Notification</p></a></li>
+      <li><a href="/settings/"><img src="{% static 'images/left_icon7.png' %}" /><p>Settings</p></a></li>
+    </ul>
+    
+  </div>
+  <div class="about_us_content col-sm-6">
+       <div class="about_me">
+          <div>
+              <p>WORKING AT</p>
+              <span class="info01">{{user_info.working_at}}</span>
+	     <form method="post" action="/edit_user_details/working_at/" >
+		{% csrf_token %}
+              <input class="work01" name = "working_at" type="text" placeholder="working at" />
+               <a class="edit_info edit01" href="javascript:void(0)"><i class="fa fa-pencil" aria-hidden="true"></i>EDIT </a>
+		
+	
+               <a style="color:#fca633;" class="save_info save01" href="javascript:void(0)"><button type="submit">Save</button></a>
+               </form>
+          </div>
+          <div class="colg">
+              <p>COLLEGE</p>
+              <span class="info02">{{user_info.college}}</span>
+		<form method="post" action="/edit_user_details/college/" >
+		{% csrf_token %}
+              <input class="work02" type="text" name="college" placeholder="college" />
+              <a class="edit_info edit02" href="javascript:void(0)"><i class="fa fa-pencil" aria-hidden="true"></i>EDIT </a>
+              <a style="color:#fca633;" class="save_info save02" href="javascript:void(0)"><button type="submit">Save</button></a>
+		</form>
+          </div>
+          <div class="about">
+              <p>ABOUT ME</p>
+              <span class="info03">{{user_info.about}}</span>
+		<form method="post" action="/edit_user_details/about/" >
+		{% csrf_token %}
+              <input class="work03" type="text" name="about" placeholder="about me"></textarea>
+              <a class="edit_info edit03" href="javascript:void(0)"><i class="fa fa-pencil" aria-hidden="true"></i>EDIT </a>
+              <a style="color:#fca633;" class="save_info save03" href="javascript:void(0)"><button type="submit">Save</button></a>
+		</form>
+          </div>
+       </div>
+       <div class="img_content">
+     <div class="hed_img_list">
+       <h2>MUTUAL CONNECTION</h2>
+     </div>
+     <ul>
+	{% for i in my_friends %}
+         <li>
+             <a href="/other_profile/{{i.user.id}}"><img src="{{i.profile_image.url}}"></a>
+             <img src="{% static 'images/icon_tickmark.png' %}" class="tickmark">
+             <div class="hover_content">
+                <p>{{i.user.first_name|title}} <span> {{i.age}}</span></p>
+                <div class="border_hover"></div>
+                <p class="entre">{{i.designation|title}}</p>
+             </div>
+         </li>
+	{% endfor %}
+         
+     </ul>
+    </div>
+       <div class="reguloe_visitor">
+       <div class="hed_img_list">
+       <h2>MUTUAL HANGOUTS</h2>
+       </div>
+         <ul>
+             {% for i,value in hangout_dict.items %}
+             <li>
+              <div class="col-sm-3">
+                 <h1>{{i.hangout.name|title}}<img class="tickmark" src="{% static 'images/tickmark.png' %}" /></h1>
+                 <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    {{i.hangout.address|title}}</p>
+                   
+             </div> 
+             <div class="col-sm-9 right_content_regulor">
+               <p>Cafeteria/Restaurant<span><i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart" aria-hidden="true"></i></span>
+               <span><img src="{% static 'images/share.png' %}" /></span></p>
+               <div class="visitors">
+                 <p class="visit">Recent Visitor</p>
+		{% for j in value %}
+                 <div class="profile_pick_landing" data-popup-open="popup{{j.user.user.username}}-{{forloop.counter}}">
+                    <img src="{{j.user.profile_image.url}}" />
+                    <div class="popup" data-popup="popup{{j.user.user.username}}-{{forloop.counter}}">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="{{j.user.profile_image.url}}" />
+                       <div class="info_profile">
+                        <p>{{j.user.user.first_name|title}}</p>
+                        <p class="entre">{{j.user.designation|title}}</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup{{j.user.user.username}}-{{forloop.counter}}" href="#"><img src="{% static 'images/close.png' %}" /></a>
+                    </div>
+
+
+                  </div>
+                 </div>
+		{% endfor %}
+                 
+               </div>
+             </div>
+         
+             </li>
+		{% endfor %}
+
+
+		{% for i,value in event_dict.items %}
+
+             <li>
+
+              <div class="col-sm-3">
+
+                 <h1>{{i.event.name|title}}
+<img class="tickmark" src="{% static 'images/tickmark.png' %}" /></h1>
+
+                 <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+
+                    {{i.event.hangout.address|title}}</p>
+
+                   
+
+             </div> 
+
+             <div class="col-sm-9 right_content_regulor">
+
+               <p>Cafeteria/Restaurant<span><i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart" aria-hidden="true"></i></span>
+
+               <span><img src="{% static 'images/share.png' %}" /></span></p>
+
+               <div class="visitors">
+
+                 <p class="visit">Recent Visitor</p>
+
+		{% for j in value %}
+
+                 <div class="profile_pick_landing" data-popup-open="popup{{j.user.user.username}}-{{forloop.counter}}">
+
+                    <img src="{{j.user.profile_image.url}}" />
+
+                    <div class="popup" data-popup="popup{{j.user.user.username}}-{{forloop.counter}}">
+
+                      <div class="popup-inner">
+
+                       <div class="popup_content">
+
+                          <div class="img_about">
+
+                       <img src="{{j.user.profile_image.url}}" />
+
+                       <div class="info_profile">
+
+                        <p>{{j.user.user.first_name|title}}</p>
+
+                        <p class="entre">{{j.user.designation|title}}</p>
+
+                       </div>
+
+                    </div>
+
+                       </div>
+
+                      <a class="popup-close" data-popup-close="popup{{j.user.user.username}}-{{forloop.counter}}" href="#"><img src="{% static 'images/close.png' %}" /></a>
+
+                    </div>
+
+
+
+
+
+                  </div>
+
+                 </div>
+
+{% endfor %}
+
+
+ </div>
+
+             </div>
+
+
+             </li>
+	{% endfor %}
+            
+        </ul>
+          <div class="hed_img_list">
+             <h2>CERTIFICATION</h2>
+          </div>
+         
+         <ul>
+
+
+
+
+	{% for i,value in certified_hangout.items %}
+             <li>
+              <div class="col-sm-3">
+                 <h1>{{i.hangout.name|title}}<img class="tickmark" src="{% static 'images/tickmark.png' %}" /></h1>
+                 <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    {{i.hangout.address|title}}</p>
+                   
+             </div> 
+             <div class="col-sm-9 right_content_regulor">
+               <p>Cafeteria/Restaurant<span><i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart" aria-hidden="true"></i></span>
+               <span><img src="{% static 'images/share.png' %}" /></span></p>
+               <div class="visitors">
+                 <p class="visit">Recent Visitor</p>
+		{% for j in value %}
+                 <div class="profile_pick_landing" data-popup-open="popup{{j.user.user.username}}-{{forloop.counter}}">
+                    <img src="{{j.user.profile_image.url}}" />
+                    <div class="popup" data-popup="popup{{j.user.user.username}}-{{forloop.counter}}">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="{{j.user.profile_image.url}}" />
+                       <div class="info_profile">
+                        <p>{{j.user.user.first_name|title}}</p>
+                        <p class="entre">{{j.user.designation|title}}</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup{{j.user.user.username}}-{{forloop.counter}}" href="#"><img src="{% static 'images/close.png' %}" /></a>
+                    </div>
+
+
+                  </div>
+                 </div>
+		{% endfor %}
+                 
+               </div>
+             </div>
+         
+             </li>
+		{% endfor %}
+
+
+		{% for i,value in certified_event.items %}
+
+             <li>
+
+              <div class="col-sm-3">
+
+                 <h1>{{i.event.name|title}}
+<img class="tickmark" src="{% static 'images/tickmark.png' %}" /></h1>
+
+                 <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+
+                    {{i.event.hangout.address|title}}</p>
+
+                   
+
+             </div> 
+
+             <div class="col-sm-9 right_content_regulor">
+
+               <p>Cafeteria/Restaurant<span><i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart" aria-hidden="true"></i></span>
+
+               <span><img src="{% static 'images/share.png' %}" /></span></p>
+
+               <div class="visitors">
+
+                 <p class="visit">Recent Visitor</p>
+
+		{% for j in value %}
+
+                 <div class="profile_pick_landing" data-popup-open="popup{{j.user.user.username}}-{{forloop.counter}}">
+
+                    <img src="{{j.user.profile_image.url}}" />
+
+                    <div class="popup" data-popup="popup{{j.user.user.username}}-{{forloop.counter}}">
+
+                      <div class="popup-inner">
+
+                       <div class="popup_content">
+
+                          <div class="img_about">
+
+                       <img src="{{j.user.profile_image.url}}" />
+
+                       <div class="info_profile">
+
+                        <p>{{j.user.user.first_name|title}}</p>
+
+                        <p class="entre">{{j.user.designation|title}}</p>
+
+                       </div>
+
+                    </div>
+
+                       </div>
+
+                      <a class="popup-close" data-popup-close="popup{{j.user.user.username}}-{{forloop.counter}}" href="#"><img src="{% static 'images/close.png' %}" /></a>
+
+                    </div>
+
+
+
+
+
+                  </div>
+
+                 </div>
+
+{% endfor %}
+
+
+ </div>
+
+             </div>
+
+
+             </li>
+	{% endfor %}
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- <li>
+              <div class="col-sm-3">
+                 <h1>Cafe Illitratti<img class="tickmark" src="images/tickmark.png" /></h1>
+                 <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    Illitrati Green Park</p>
+                   
+             </div> 
+             <div class="col-sm-9 right_content_regulor">
+               <p>Cafeteria/Restaurant<span><i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart" aria-hidden="true"></i></span>
+               <span><img src="images/share.png" /></span></p>
+               <div class="visitors">
+                 <p class="visit">Recent Visitor</p>
+                 <div class="profile_pick_landing" data-popup-open="popup-2">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-2">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-2" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                  <div class="profile_pick_landing" data-popup-open="popup-3">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-3">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-3" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="profile_pick_landing" data-popup-open="popup-4">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-4">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-4" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="profile_pick_landing" data-popup-open="popup-5">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-5">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-5" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                  <div class="profile_pick_landing" data-popup-open="popup-6">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-6">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-6" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="profile_pick_landing" data-popup-open="popup-7">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-7">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-7" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                  <div class="profile_pick_landing" data-popup-open="popup-8">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-8">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-8" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 
+               </div>
+             </div>
+             </li>
+             <li>
+              <div class="col-sm-3">
+                 <h1>Cafe Illitratti<img class="tickmark" src="images/tickmark.png" /></h1>
+                 <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    Illitrati Green Park</p>
+                   
+             </div> 
+             <div class="col-sm-9 right_content_regulor">
+               <p>Cafeteria/Restaurant<span><i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart" aria-hidden="true"></i></span>
+               <span><img src="images/share.png" /></span></p>
+               <div class="visitors">
+                 <p class="visit">Recent Visitor</p>
+                 <div class="profile_pick_landing" data-popup-open="popup-2">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-2">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-2" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                  <div class="profile_pick_landing" data-popup-open="popup-3">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-3">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-3" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="profile_pick_landing" data-popup-open="popup-4">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-4">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-4" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="profile_pick_landing" data-popup-open="popup-5">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-5">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-5" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                  <div class="profile_pick_landing" data-popup-open="popup-6">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-6">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-6" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="profile_pick_landing" data-popup-open="popup-7">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-7">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-7" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                  <div class="profile_pick_landing" data-popup-open="popup-8">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-8">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-8" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 
+               </div>
+             </div>
+             </li>
+             <li>
+              <div class="col-sm-3">
+                 <h1>Cafe Illitratti<img class="tickmark" src="images/tickmark.png" /></h1>
+                 <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    Illitrati Green Park</p>
+                   
+             </div> 
+             <div class="col-sm-9 right_content_regulor">
+               <p>Cafeteria/Restaurant<span><i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart" aria-hidden="true"></i></span>
+               <span><img src="images/share.png" /></span></p>
+               <div class="visitors">
+                 <p class="visit">Recent Visitor</p>
+                 <div class="profile_pick_landing" data-popup-open="popup-2">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-2">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-2" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                  <div class="profile_pick_landing" data-popup-open="popup-3">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-3">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-3" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="profile_pick_landing" data-popup-open="popup-4">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-4">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-4" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="profile_pick_landing" data-popup-open="popup-5">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-5">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-5" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                  <div class="profile_pick_landing" data-popup-open="popup-6">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-6">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-6" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="profile_pick_landing" data-popup-open="popup-7">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-7">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-7" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                  <div class="profile_pick_landing" data-popup-open="popup-8">
+                    <img src="images/clint01.png" />
+                    <div class="popup" data-popup="popup-8">
+                      <div class="popup-inner">
+                       <div class="popup_content">
+                          <div class="img_about">
+                       <img src="images/imgclint1.jpg" />
+                       <div class="info_profile">
+                        <p>Dr.Ryan Cox </p>
+                        <p class="entre">Entreprenuer</p>
+                       </div>
+                    </div>
+                       </div>
+                      <a class="popup-close" data-popup-close="popup-8" href="#"><img src="images/close.png" /></a>
+                    </div>
+                  </div>
+                 </div>
+                 
+               </div>
+             </div>
+             </li>-->
+            
+        </ul>
+        
+        <div class="report_info">
+           <div class="small_border"></div>
+           <p>Lorem ipsum dolor sit amet, . Aenean commodo ligula eget onsectetuer adipiscing elit. Aen ligula eget dolororem ipsum dolor sit amet,</p>
+           <button class="report">REPORT</button>
+        </div>
+      </div>
+       
+    <div class="clearfix"></div>
+  </div>
+  <div class="download col-sm-3">
+      <img src="{% static 'images/mobile_img.png' %}" />
+      <h2>Download<br /> Activork</h2>
+      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="footer profile_footer">
+  <div class="footer_cuntent">
+     <div class="container">
+         <div class="logo_border">
+            <img src="{% static 'images/logo_footer.png' %}" />
+            <div class="border"></div>
+         </div>
+        <div class="col-sm-5">
+            <p>ActivOrk is a location based, active social networking platform.We believe meaningful connections can touch our lives positively.Knowing the people, we are surrounded by in our daily 
+                lives, better goes a long way in building a safe, connected and helpful world.Having understood the limitations of conventional Social networking platforms, ActivOrk tries to bring back the 
+                 intimacy of a conversation and zeal of meeting new friends.Privacy and safety of our users is our topmost priority. We go an extra mile to make sure that you are safe and have the best user 
+                  experience on ActivOrk. </p>
+        </div>
+        <div class="col-sm-7">
+           <div class="col-sm-3">
+              <div class="footer_menu">
+                 <p>HOME</p>
+                 <ul>
+                     <li><a href="#">About</a></li>
+                     <li><a href="#">Careers</a></li>
+                     <li><a href="#">Blog</a></li>
+                     <li><a href="#">Developers</a></li>
+                     <li><a href="#">Contact</a></li>
+                     
+                 </ul>
+              </div>
+           </div>
+           <div class="col-sm-3">
+              <div class="footer_menu">
+                 <p>BUSINESSES</p>
+                 <ul>
+                     <li><a href="#">Add Hangout</a></li>
+                     <li><a href="#">Claim your Listing</a></li>
+                     <li><a href="#">Advertise</a></li>
+                     <li><a href="#">Base</a></li>
+                     <li><a href="#">Book</a></li>
+                     <li><a href="#">Guidelines</a></li>
+                     <li><a href="#">Business Blog</a></li>
+                     
+                 </ul>
+              </div>
+           </div>
+           <div class="col-sm-3">
+              <div class="footer_menu">
+                 <p>POLICIES</p>
+                 <ul>
+                     <li><a href="#">Privacy</a></li>
+                     <li><a href="#">Terms</a></li>
+                     <li><a href="#">Code of Conduct</a></li>
+                     <li><a href="#">API Policy</a></li>
+                     
+                 </ul>
+              </div>
+           </div>
+           <div class="col-sm-2">
+              <div class="footer_menu">
+                 <p>OTHERS</p>
+                 <ul>
+                     <li><a href="#">Feedback</a></li>
+                     <li><a href="#">Contact</a></li>
+                     <li><a href="#">Sitemap</a></li>
+                     <li><a href="#">ENGLISH</a></li>
+                     
+                 </ul>
+              </div>
+           </div>
+           <div class="clearfix"></div>
+           <div class="social_icons">
+             <ul>
+                 <li><i class="fa fa-facebook" aria-hidden="true"></i></li>
+                 <li><i class="fa fa-twitter" aria-hidden="true"></i></li>
+                 <li><i class="fa fa-instagram" aria-hidden="true"></i></li>
+             </ul>
+           </div>
+           <a href="#" class="scrollToTop"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+        </div>
+        <div class="clearfix"></div>
+        <p class="copyright">© 2015 Activork. All Right Reserved</p>
+     </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="cropping_form" action="/self_profile/" enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save"/>
+  </form>
+  {% if image %}
+    <br />
+    <h4>Preview</h4>
+     
+      <h5>using cropped_thumbnail tag - free crop </h5>
+  
+     
+  {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+$(function(){
+  $('#id_image').change(function(){
+   // var url = $(this).val();
+	//console.log(url)
+  //alert($('.jcrop-image img').attr('src'));
+  //$('.jcrop-image img').attr('src',url)
+  var input = document.getElementById("id_image");
+  var fReader = new FileReader();
+  fReader.readAsDataURL(input.files[0]);
+  fReader.onloadend = function(event){
+	var img = $('.jcrop-image').children('img')
+	var inside = $('.jcrop-image div div').children('img');
+	//var div_1 = inside[0]
+	console.log(inside)
+	console.log($(img))
+//	alert($(img))
+//	alert($(img).attr('src'))
+	console.log(event.target.result);
+	$(img).attr('src',event.target.result);
+	$(inside).attr('src',event.target.result);
+  }
+        
+     
+  });
+
+});
+</script>
+
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script> 
+<script src="{% static 'js/jquery1.9.1.js' %}"></script> 
+<script src="{% static 'js/bootstrap.js' %}"></script> 
+
+</body>
+</html>
