@@ -153,6 +153,7 @@ class Hangout_Liked(models.Model):
 	user = models.ForeignKey(UserProfile)
 	hangout = models.ForeignKey(Hangout)
 	time = models.TimeField(auto_now_add=True)
+	regular = models.BooleanField(default=False)
 
 class User_Connection(models.Model):
 	sender = models.ForeignKey(UserProfile)
@@ -171,7 +172,7 @@ class Event_Liked(models.Model):
 	user = models.ForeignKey(UserProfile)
 	event = models.ForeignKey(Event)
 	time = models.TimeField(auto_now_add=True)
-	
+	regular = models.BooleanField(default=False)	
 
 
 class UserStatus(models.Model):
