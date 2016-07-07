@@ -10,6 +10,24 @@ from PIL import Image
 import shutil
 
 
+def notifications(request):
+	user_info = UserProfile.objects.get(user=request.user)
+	get_receiver_ids = list(User_Connection.objects.filter(sender=user_info).values_list("receiver",flat=True))		
+	get_sender_ids = list(User_Connection.objects.filter(receiver=user_info).values_list("sender",flat=True))
+
+	
+	get_sender_ids.extend(get_receiver_ids)
+
+	total_ids = [i for i in get_sender_ids]
+	if len(total_ids) != 0:
+		last_regular_suugested_id = max(total_ids)
+		get_next_id = last_regular_suggested_id +1 
+	else:
+		get_next_id = 1
+	return render(request,'notification.html',{'user_info':user_info,'get_next_id':get_next_id})
+
+
+
 def messages(request):
         user_info = UserProfile.objects.get(user=request.user)
 	get_receiver_ids = list(User_Connection.objects.filter(sender=user_info).values_list("receiver",flat=True))		

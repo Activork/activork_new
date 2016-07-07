@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^self_profile/$','myapp.views.self_profile',name='self_profile'),
     url(r'^settings/$','myapp.views.settings',name='settings'),
     url(r'^messages/$','myapp.views.messages',name='messages'),
+    url(r'^notifications/$','myapp.views.notifications',name='notifications'),
    
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
