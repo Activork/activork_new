@@ -9,6 +9,42 @@ import os
 from PIL import Image
 import shutil
 
+
+def messages(request):
+        user_info = UserProfile.objects.get(user=request.user)
+	get_receiver_ids = list(User_Connection.objects.filter(sender=user_info).values_list("receiver",flat=True))		
+	get_sender_ids = list(User_Connection.objects.filter(receiver=user_info).values_list("sender",flat=True))
+
+	
+	get_sender_ids.extend(get_receiver_ids)
+
+	total_ids = [i for i in get_sender_ids]
+	if len(total_ids) != 0:
+		
+		get_next_id = max(total_ids) +1 
+	else:
+		get_next_id = 1
+        return render(request,'messages.html',{'user_info':user_info,'get_next_id':get_next_id})
+
+
+
+def settings(request):
+	user_info = UserProfile.objects.get(user=request.user)
+	get_receiver_ids = list(User_Connection.objects.filter(sender=user_info).values_list("receiver",flat=True))		
+	get_sender_ids = list(User_Connection.objects.filter(receiver=user_info).values_list("sender",flat=True))
+
+	
+	get_sender_ids.extend(get_receiver_ids)
+
+	total_ids = [i for i in get_sender_ids]
+	if len(total_ids) != 0:
+		
+		get_next_id = max(total_ids) +1 
+	else:
+		get_next_id = 1
+	return render(request,'settings.html',{'user_info':user_info,'get_next_id':get_next_id})
+
+
 def self_profile(request):
 	check = UserProfile.objects.filter(user=request.user).exists()
 	if check:

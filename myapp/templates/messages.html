@@ -1,0 +1,530 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<noscript>
+<meta http-equiv="refresh" content="0;url=common/js.htm">
+<meta name="google-translate-customization" content="1121bf4f2acd5ff-6e941d90591bf19b-gd5d57505b80b0941-1d">
+
+</meta>
+</noscript>
+<title>activork</title>
+<!--[if lte IE 7]><meta http-equiv="refresh" content="0; url=common/ie_block.htm" /><![endif]-->
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+<link rel="icon" href="{% static 'images/febric_icon.png' %}" type="image/x-icon"/>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="header">
+   <div class="container">
+     <div class="logo">
+       <img src="{% static 'images/logo.png' %}" />
+      
+     </div>
+     <div class="right_hedcontent">
+       <ul>
+           <li>
+              <a href="/self_profile/"><p style="background:rgba(0, 0, 0, 0) url('{{user_info.profile_image.url}}') no-repeat scroll 1px 0 / 100% auto"class="profile"></p></a>
+              <span>{{user_info.user.first_name|title}}</span>
+           </li>
+           <li>
+             <a href="/landing/"> <img  src="{% static 'images/icon6.png' %}" /><span class="label_page">Hangouts Listings</span></a>
+           </li>
+            <li>
+             <a href="/regular_suggestion/{{get_next_id}}/"> <img src="{% static 'images/icon1.png' %}" /><span class="label_page">Regular Suggestion</span></a>
+              
+           </li>
+            <li >
+              <a href="/my_hangouts/"><img src="{% static 'images/icon2.png' %}" /><span class="label_page">My Hangouts</span></a>
+              
+           </li>
+            <li class="active">
+             <a href="/messages/"> <img src="{% static 'images/icon5.png' %}" /><span class="label_page">Messages</span></a>
+              
+           </li>
+            <li>
+              <a href="/notifications/"><img src="{% static 'images/icon4.png' %}" /><span class="label_page">Notification</span></a>
+           </li>
+           <li class="setting">
+             <a href="#"> <img src="{% static 'images/icon7.png' %}" /></a>
+             <span class="label_page">Notification</span>
+             <div class="setting_information">
+        <div class="arrow-setting"></div>
+         <ul>
+           <li style="border:none; margin:0"><a href="/settings/">Setting</a></li>
+           <li><a href="#">Logout</a></li>
+         </ul>
+       </div>
+           </li>
+          
+       </ul>
+     </div> 
+   </div>
+</div>
+<div class="banner_content_setting">
+ <div class="container">
+ 
+ <div class="search_hangout setting_surch">
+ <form>
+     <select class="loc">
+     <option>LOCATION</option>
+     <option>LOCATION01</option>
+     <option>LOCATION02</option>
+     <option>LOCATION03</option>
+     </select>
+     <select class="hang">
+     <option>SEARCH HANGOUT</option>
+     <option>SEARCH HANGOUT</option>
+     <option>SEARCH HANGOUT</option>
+     <option>SEARCH HANGOUT</option>
+     </select>
+     
+     <button class="search"><i class="fa fa-search" aria-hidden="true"></i></button>
+  </form>   
+ </div>
+ <div class="bottom_banner_text">
+   
+   
+ </div>
+ </div>
+</div>
+<div class="content_inr">
+  <div class="myprofile_tab col-sm-3">
+    <ul class="tab_filter">
+       <li ><a href="/self_profile/"><img src="{{user_info.profile_image.url}}" /><p>My Profile</p></a></li>
+      <li><a href="/my_hangout/"><img src="{% static 'images/left_icon2.png' %}" /><p>My Hangouts</p></a></li>
+      <li><a href="/landing_page/"><img src="{% static 'images/left_icon3.png' %}" /><p>Hangouts Listings</p></a></li>
+       <li><a href="/regular_suggestion/{{get_next_id}}/"><img src="{% static 'images/left_icon4.png' %}" /><p>Regular Suggestion</p></a></li>
+      <li class="active"><a href="/messages/"><img src="{% static 'images/left_icon5.png' %}" /><p>Messages</p></a></li>
+      <li ><a href="/notifications/"><img src="{% static 'images/left_icon6.png' %}" /><p>Notification</p></a></li>
+      <li ><a href="/settings/"><img src="{% static 'images/left_icon7.png' %}" /><p>Settings</p></a></li>
+    </ul>
+    
+  </div>
+  <div class="about_us_content col-sm-6">
+  <div class="compose">
+        <a href="javascript:void(0);" class="chat-listinginactive"><i class="fa fa-arrow-left"></i></a>
+                 <div class="my-search">
+                          <i class="inputbutton fa fa-search"></i>
+                          <input type="text" class="inputtext" placeholder="search Messages"/>
+                      </div>
+                 <div class="right_compose">
+                 
+                   <p><i class="fa fa-plus" aria-hidden="true"></i>COMPOSE</p>
+                   <img src="images/massage_setting.png" />
+                 </div>
+                  <div class="cf"></div>
+              </div>
+       <div class="window">
+        
+              <aside class="conv-list-view">
+                  <div class="nano" id="lefty">
+                      <ul class="conv-list nano-content">
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint01.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint02.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li  class="selected">
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint03.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint04.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint05.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint06.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint07.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint08.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                     <img src="images/msg_clint07.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint05.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint02.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                     <img src="images/msg_clint01.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li class="selected">
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint03.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="status">
+                                  <figure class="status__avatar">
+                                      <img src="images/msg_clint07.png">
+                                  </figure>
+                                  <div class="meta">
+                                      <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                      
+                                      <div class="meta__sub--dark">Aenean commodo ligula eget... </div>
+                                  </div>
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+              </aside>
+              <section class="chat-view">
+                  <!--<header class="chat-view__header">
+                      <div class="cf">
+                          <a href="javascript:void(0);" class="chat-listinginactive"><i class="fa fa-arrow-left"></i></a>
+                          <div class="status">
+                              <figure class="status__avatar">
+                                  <img src="http://1.gravatar.com/avatar/89b9501f0f9e3020aab173f9a5a47683?size=80">
+                              </figure>
+                              <div class="meta">
+                                  <div class="meta__name-">Mads Cordes</div>
+                              </div>
+                          </div>
+                          <ul class="function-list">
+                              <a href="javascript:void(0);"><i class="fa fa-paperclip"></i></a>
+                              <a href="javascript:void(0);"><i class="fa fa-ellipsis-v"></i></a>
+                          </ul>
+                      </div>
+                  </header>-->
+                  <section class="message-view">
+                      <div class="msgs nano">
+                          <div class="msgswrapper nano-content">
+                              <div class="single-msg">
+                                  <div class="message">
+                                      <figure class="message__avatar">
+                                          <img src="images/msg_clint03.png">
+                                      </figure>
+                                      <div class="message__bubble">
+                                       <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cumsociis eget... 
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                              <div class="cf"></div>
+                              <div class="single-msg">
+                                  <div class="message">
+                                      <figure class="message__avatar">
+                                          <img src="images/msg_clint03.png">
+                                      </figure>
+                                      <div class="message__bubble">
+                                       <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cumsociis eget... 
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                              <div class="cf"></div>
+                              <!--<div class="single-msg">
+                                  <div class="message--send">
+                                      <div class="sameuser__msgbubble">
+                                          <div class="message__bubble--send">
+                                              Browserhacks looks great!
+                                          </div>
+                                          <div class="cf"></div>
+                                          <div class="message__bubble--send afterfirstright image">
+                                              <img src="https://d3jgkzl5mcxi5w.cloudfront.net/2014/09/Lumia-830-and-9301.jpg" alt="image" />
+                                          </div>
+                                      </div>
+                                      <figure class="message__avatar">
+                                          <img src="http://1.gravatar.com/avatar/89b9501f0f9e3020aab173f9a5a47683?size=80">
+                                      </figure>
+                                  </div>
+                              </div>-->
+                              <!--<div class="single-msg">
+                                  <div class="message--send">
+                                      <div class="sameuser__msgbubble">
+                                          <div class="message__bubble--send">
+                                              Hi Tim! How are you? Its been long since we had a proper convo.
+                                          </div>
+                                      </div>
+                                      <figure class="message__avatar">
+                                          <img src="http://1.gravatar.com/avatar/89b9501f0f9e3020aab173f9a5a47683?size=80">
+                                      </figure>
+                                  </div>
+                                  <div class="time-rating"><a class="timed"><i class="fa fa-check"></i>3 mins ago</a><a class="ratings"><i class="fa fa-star-o"></i> Rate it</a></div>
+                              </div>-->
+                              <div class="single-msg">
+                                  <div class="message">
+                                      <figure class="message__avatar">
+                                          <img src="images/msg_clint03.png">
+                                      </figure>
+                                      <div class="message__bubble">
+                                       <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cumsociis eget... 
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                              <div class="cf"></div>
+                              <div class="single-msg">
+                                  <div class="message">
+                                      <figure class="message__avatar">
+                                          <img src="images/msg_clint03.png">
+                                      </figure>
+                                      <div class="message__bubble">
+                                       <div class="meta__name">Quintin Tray <a href="javascript:void(0);" class="time">18:34</a></div>
+                                          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cumsociis eget... 
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                              <div class="cf"></div>
+                              
+                          </div>
+                      </div>
+                  </section>
+                  <div class="cf"></div>
+                  <footer class="chat-view__input">
+                      <div class="floatfooter">
+                          <div class="subfooter1">
+                             
+                              <textarea id="texttype" class="txt1" rows="2" cols="5" placeholder="TYPE HERE..." style="height: 30px"></textarea>
+                              <!--<input type="text" placeholder="Your message"/>-->
+                             
+                          </div>
+                          <div class="subfooter2">
+                              <ul>
+                                  <li><img src="images/msg_icon1.png" /></li>
+                                  <li><img src="images/msg_icon2.png" /></li>
+                                  <li><img src="images/msg_icon3.png" /></li>
+                              </ul>
+                              <ul class="formobile">
+                                  <li><img src="images/msg_icon1.png" /></li>
+                                  <li><img src="images/msg_icon2.png" /></li>
+                                  <li><img src="images/msg_icon3.png" /></li>
+                              </ul>
+                              <button class="update1">UPDATE</button>
+                          </div>
+                      </div>
+                  </footer>
+              </section>
+          </div>
+          
+       
+    <div class="clearfix"></div>
+  </div>
+  <div class="download_none col-sm-3">
+     
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="footer">
+  <div class="footer_cuntent">
+     <div class="container">
+         <div class="logo_border">
+            <img src="images/logo_footer.png" />
+            <div class="border"></div>
+         </div>
+        <div class="col-sm-5">
+            <p>ActivOrk is a location based, active social networking platform.We believe meaningful connections can touch our lives positively.Knowing the people, we are surrounded by in our daily 
+                lives, better goes a long way in building a safe, connected and helpful world.Having understood the limitations of conventional Social networking platforms, ActivOrk tries to bring back the 
+                 intimacy of a conversation and zeal of meeting new friends.Privacy and safety of our users is our topmost priority. We go an extra mile to make sure that you are safe and have the best user 
+                  experience on ActivOrk. </p>
+        </div>
+        <div class="col-sm-7">
+           <div class="col-sm-3">
+              <div class="footer_menu">
+                 <p>HOME</p>
+                 <ul>
+                     <li><a href="#">About</a></li>
+                     <li><a href="#">Careers</a></li>
+                     <li><a href="#">Blog</a></li>
+                     <li><a href="#">Developers</a></li>
+                     <li><a href="#">Contact</a></li>
+                     
+                 </ul>
+              </div>
+           </div>
+           <div class="col-sm-3">
+              <div class="footer_menu">
+                 <p>BUSINESSES</p>
+                 <ul>
+                     <li><a href="#">Add Hangout</a></li>
+                     <li><a href="#">Claim your Listing</a></li>
+                     <li><a href="#">Advertise</a></li>
+                     <li><a href="#">Base</a></li>
+                     <li><a href="#">Book</a></li>
+                     <li><a href="#">Guidelines</a></li>
+                     <li><a href="#">Business Blog</a></li>
+                     
+                 </ul>
+              </div>
+           </div>
+           <div class="col-sm-3">
+              <div class="footer_menu">
+                 <p>POLICIES</p>
+                 <ul>
+                     <li><a href="#">Privacy</a></li>
+                     <li><a href="#">Terms</a></li>
+                     <li><a href="#">Code of Conduct</a></li>
+                     <li><a href="#">API Policy</a></li>
+                     
+                 </ul>
+              </div>
+           </div>
+           <div class="col-sm-2">
+              <div class="footer_menu">
+                 <p>OTHERS</p>
+                 <ul>
+                     <li><a href="#">Feedback</a></li>
+                     <li><a href="#">Contact</a></li>
+                     <li><a href="#">Sitemap</a></li>
+                     <li><a href="#">ENGLISH</a></li>
+                     
+                 </ul>
+              </div>
+           </div>
+           <div class="clearfix"></div>
+           <div class="social_icons">
+             <ul>
+                 <li><i class="fa fa-facebook" aria-hidden="true"></i></li>
+                 <li><i class="fa fa-twitter" aria-hidden="true"></i></li>
+                 <li><i class="fa fa-instagram" aria-hidden="true"></i></li>
+             </ul>
+           </div>
+           <a href="#" class="scrollToTop"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+        </div>
+        <div class="clearfix"></div>
+        <p class="copyright">© 2015 Activork. All Right Reserved</p>
+     </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script> 
+<script src="{% static 'js/jquery1.9.1.js' %}"></script> 
+<script src="{% static 'js/bootstrap.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>>
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script type="text/javascript" src="js/jquery.nanoscroller.min.js"></script>
+
+</body>
+</html>

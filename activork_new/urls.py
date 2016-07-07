@@ -19,6 +19,8 @@ urlpatterns = patterns('',
     url(r'^home/$', 'django_social_app.views.home'),
     url(r'^logout/$', 'django_social_app.views.logout'),
     url(r'^self_profile/$','myapp.views.self_profile',name='self_profile'),
+    url(r'^settings/$','myapp.views.settings',name='settings'),
+    url(r'^messages/$','myapp.views.messages',name='messages'),
    
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
