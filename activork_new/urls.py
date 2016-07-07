@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf import settings
-from django_social_app.views import MySignupView
+from django_social_app.views import MySignupView,MyLoginView
 
 
 urlpatterns = patterns('',
@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^accounts/signup/$', MySignupView.as_view(template_name="my_signup.html")),
-    url(r'^accounts/login/$','MyLoginView.as_view()'),
+    url(r'^accounts/login/$',MyLoginView.as_view()),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^$', 'django_social_app.views.login'),
     url(r'^home/$', 'django_social_app.views.home'),
