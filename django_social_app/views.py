@@ -13,6 +13,12 @@ from allauth.account.utils import (get_next_redirect_url, complete_signup,
                     passthrough_next_redirect_url, url_str_to_user_pk,
                     logout_on_password_change)
 
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.http import (HttpResponseRedirect, Http404,
+                         HttpResponsePermanentRedirect)
+
+
+
 class MySignupView(SignupView):
     template_name = 'my_signup.html'
     form_class = SignupForm
