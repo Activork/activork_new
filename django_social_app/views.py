@@ -26,7 +26,7 @@ from .models import MyUserSerializer
 
 
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def signup(request):
 	if request.method == "GET":
 		user = MyUser.objects.all()
