@@ -27,7 +27,7 @@ from .models import MyUserSerializer
 
 
 @api_view(['GET','POST'])
-def signup(request):
+def mobile_signup(request):
 	if request.method == "GET":
 		user = MyUser.objects.all()
 		serializer = MyUserSerializer(user,many=True)
@@ -50,6 +50,28 @@ def signup(request):
 
 		serializer = MyUserSerializer(user)
 		return Response({'user_data':serializer.data,'SESSION_ID':request.session.session_key})
+
+
+
+@api_view(['POST'])
+def mobile_login(request):
+	if request.method == "POST":
+		email = request.data["email"]
+		password = request.data["password"]
+		user = auth.authenticate(email=email,password=password)
+
+
+		if user:
+			if user.is_active:
+				auth.login(request,user)
+			else:
+				return Response("please verify your email")
+
+		else:
+			return Response("Invlaid Credentials")
+
+	else:
+		return Response("Get Request")
 
 
 class MySignupView(SignupView):
