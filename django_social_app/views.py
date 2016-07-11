@@ -17,7 +17,38 @@ from allauth.account.utils import (get_next_redirect_url, complete_signup,
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import (HttpResponseRedirect, Http404,
                          HttpResponsePermanentRedirect)
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
+#api serializers
+from .models import MyUserSerializer
+
+
+
+
+@api_view(['POST'])
+def signup(request):
+	if request.method == "GET":
+		user = MyUser.objects.all()
+		serializer = MyUserSerializer(user,many=True)
+		return Response(serializer.data)
+
+	if request.method == "POST":
+		serializer = MyUserSerializer(data=request.data)
+		if serializer.is_valid():
+			username = request.data["username"]
+			first_name = username
+			email = request.data["email"]	
+			phone_no = request.data["phone_no"]
+			password = request.data["password"]
+			user = MyUser(username=username,first_name=first_name,email=email,phone_no=phone_no,password=password)
+			user.save()
+		else:
+			return Response(serializer.errors)
+
+
+		serializer = MyUserSerializer(user)
+		return Response({'user_data':serializer.data,'SESSION_ID':request.session.session_key})
 
 
 class MySignupView(SignupView):

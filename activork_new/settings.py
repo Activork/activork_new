@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     'notifications',
     'multiselectfield',
     'django_social_app',
+    'rest_framework',
     'social.apps.django_app.default',
     'allauth',
     'allauth.account',

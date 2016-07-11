@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^settings/$','myapp.views.settings',name='settings'),
     url(r'^messages/$','myapp.views.messages',name='messages'),
     url(r'^notifications/$','myapp.views.notifications',name='notifications'),
+    url(r'mobile/signup/','django_social_app.views.signup',name='mobile_signup'),
    
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
