@@ -64,6 +64,8 @@ def mobile_login(request):
 		if user:
 			if user.is_active:
 				auth.login(request,user)
+				serializer = MyUserSerializer(user)
+				return Response({'user_data':serializer.data,'SESSION_ID':request.session.session_key})
 			else:
 				return Response("please verify your email")
 
