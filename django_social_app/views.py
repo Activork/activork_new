@@ -42,6 +42,7 @@ def signup(request):
 			phone_no = request.data["phone_no"]
 			password = request.data["password"]
 			user = MyUser(username=username,first_name=first_name,email=email,phone_no=phone_no,password=password)
+			user.set_password(user.password)
 			user.save()
 		else:
 			return Response(serializer.errors)
