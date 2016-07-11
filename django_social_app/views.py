@@ -53,7 +53,7 @@ def mobile_signup(request):
 
 
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def mobile_login(request):
 	if request.method == "POST":
 		email = request.data["email"]
