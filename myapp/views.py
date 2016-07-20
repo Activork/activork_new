@@ -311,9 +311,9 @@ def home_page(request):
 
 	for i,j in all_event.iteritems():
 		if len(j) == 0:
-			j = Event_Liked.objects.filter(event=j).order_by('-id').values_list('user'.flat=True)[:5] 
+			j = Event_Liked.objects.filter(event=j).order_by('-id').values_list('user',flat=True)[:5] 
 		else:
-			j += Event_Liked.objects.filter(event=j).order_by('-id').values_list('user'.flat=True)[len(j):5]
+			j += Event_Liked.objects.filter(event=j).order_by('-id').values_list('user',flat=True)[len(j):5]
 
 	return render(request,'home_page.html',{'all_article':article,'all_event':all_event})
 
