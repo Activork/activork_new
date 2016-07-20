@@ -189,7 +189,7 @@ def home(request):
 		latitude = radians(js['latitude'])
 		longitude = radians(js['longitude'])
 		user = request.POST['posted_by']
-		channels = request.POST['channels']
+		interest = request.POST['channels']
 		name = request.POST['name']
 		share_with = request.POST['share_with']
 
@@ -202,7 +202,7 @@ def home(request):
 		tags = ",".join(tags)
 
 		content_data = request.POST['content']
-		obj = Article(content=content_data,video=video_file,image=image,latitude=latitude,longitude=longitude,tags=tags,posted_by=user,channels=channels,name=name,share_with=share_with)
+		obj = Article(content=content_data,video=video_file,image=image,latitude=latitude,longitude=longitude,tags=tags,posted_by=user,interest=interest,name=name,share_with=share_with)
 		obj.save()
 		if image == "":
 			#file_name = str(file_name) + ".png"
