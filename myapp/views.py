@@ -179,7 +179,7 @@ def mobile_like_article(request):
 
         if check:
                 like_obj = Like.objects.get(article=article_obj,user=userprofile_obj)
-		like-obj.like = True
+		like_obj.like = True
                 like_obj.save()
 	else:
 		like_obj = Like(article=article_obj,user=userprofile_obj,like=True)
