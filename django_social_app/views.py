@@ -10,7 +10,7 @@ from allauth.account.views import SignupView, LoginView
 from allauth.account.models import EmailAddress
 from allauth.account.forms import LoginForm, SignupForm
 from django.contrib.sessions.models import Session
-
+from django.contrib.auth.decorators import login_required
 
 from allauth.account.utils import (get_next_redirect_url, send_email_confirmation,complete_signup,
                     get_login_redirect_url, perform_login,

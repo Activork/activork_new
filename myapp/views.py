@@ -12,7 +12,7 @@ import ipgetter
 import requests
 from rest_framework.decorators import api_view
 from django_social_app.views import get_user_object 
-
+from django.contrib.auth.decorators import login_required
 from article.models import *
 from .serializers import *
 

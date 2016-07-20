@@ -13,7 +13,7 @@ from django.core.files import File
 import datetime
 import pytz
 from myapp.serializers import CommentSerializer
-
+from django.contrib.auth.decorators import login_required
 
 utc=pytz.UTC
 
