@@ -29,7 +29,7 @@ class Event_CommentSerializer(serializers.ModelSerializer):
 		model = Event_Comment
 
 
-class CommentSerilaizer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
 	commented_by = UserProfileSerializer()
 	class Meta:
 		model = Comment
