@@ -9,4 +9,4 @@ class ArticleForm(forms.ModelForm):
     share_with = forms.ChoiceField(choices=CHOICES, initial='public',widget=forms.RadioSelect())
     class Meta:
 	model = Article
-	fields = ('name','image','posted_by','content','video','channels','share_with')
+	fields = ('name','image','posted_by','content','video','interest','share_with')
