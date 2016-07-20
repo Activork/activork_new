@@ -346,9 +346,9 @@ def mobile_home_page(request):
 
 	for i,j in all_event.iteritems():
 		if len(j) == 0:
-			j = Event_Liked.objects.filter(event=j).order_by('-id').values_list('user'.flat=True)[:5] 
+			j = Event_Liked.objects.filter(event=j).order_by('-id').values_list('user',flat=True)[:5] 
 		else:
-			j += Event_Liked.objects.filter(event=j).order_by('-id').values_list('user'.flat=True)[len(j):5]
+			j += Event_Liked.objects.filter(event=j).order_by('-id').values_list('user',flat=True)[len(j):5]
 	
 	all_article = {}
 	for i in article:
