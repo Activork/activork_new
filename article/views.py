@@ -41,15 +41,15 @@ def rate_article(request):
 
 def comment_on_article(request):
 		if request.is_ajax() and request.method == "POST":
-                article_id = request.POST['article_id']
-                article_obj = Article.objects.get(id=article_id)
-                comment = request.POST['comment']
-                userprofile_obj = UserProfile.objects.get(user=request.user)
-                comment_obj = Comment(article=article_obj,comment=comment,commented_by=userprofile_obj)
-                comment_obj.save()
-                article_comment_obj = Comment.objects.filter(article=article_obj)
-                serializer = CommentSerializer(article_comment_obj,many=True)
-                return HttpResponse(serializer.data)
+                	article_id = request.POST['article_id']
+                	article_obj = Article.objects.get(id=article_id)
+                	comment = request.POST['comment']
+                	userprofile_obj = UserProfile.objects.get(user=request.user)
+                	comment_obj = Comment(article=article_obj,comment=comment,commented_by=userprofile_obj)
+                	comment_obj.save()
+                	article_comment_obj = Comment.objects.filter(article=article_obj)
+                	serializer = CommentSerializer(article_comment_obj,many=True)
+                	return HttpResponse(serializer.data)
 
 
 @login_required
