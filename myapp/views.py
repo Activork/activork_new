@@ -280,7 +280,7 @@ def mobile_update_status(request):
 
 @login_required
 def home_page(request):
-	user =r request.user
+	user =request.user
 	user_detail_obj = User_Details.objects.get(user=user)
 	all_article = []
 	for i in user_detail_obj.interest:
