@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<script src="{% static 'js/gplus-youtubeembed.js' %}"></script>
+</head>
+
+<body>
+<form method="post" action="." enctype="multipart/form-data">
+{% csrf_token %}
+{{form.as_p}}
+<input type="submit" value="POST"/>
+</form>
+<br/>
+<br/>
+
+{% if articles %}
+{% for i in articles %}
+
+{% if i.video %}
+<iframe width="640" height="360" src={{i.video}} frameborder="0" allowfullscreen></iframe>
+{% endif %}
+{% if i.image.url != "" %}
+<a href="/article_page/{{i.id}}"><img src="/media/{{i.image.url}}" style="width:400px;height:400px" /></a>
+{% endif %}
+
+
+{% endfor %}
+{% endif %}
+
+
+<script>
+optimizeYouTubeEmbeds()
+</script>
+</body>
+</html>

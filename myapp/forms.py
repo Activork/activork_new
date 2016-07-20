@@ -1,5 +1,5 @@
 from django import forms
-from .models import Upload_Image,Hangout_Staff,Event_Staff
+from .models import Upload_Image,Event_Staff
 from django import forms
 from image_cropping import ImageCropWidget
 
@@ -12,7 +12,7 @@ class Upload_ImageForm(forms.ModelForm):
 
 
 
-class Hangout_StaffForm(forms.ModelForm):
+"""class Hangout_StaffForm(forms.ModelForm):
     DAYS_OF_WEEK = (
         (0, 'Monday'),
         (1, 'Tuesday'),
@@ -25,7 +25,7 @@ class Hangout_StaffForm(forms.ModelForm):
 
     days = forms.MultipleChoiceField(choices=DAYS_OF_WEEK, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days', initial=("1", "2"))
     class Meta:
-        model = Hangout_Staff
+        model = Hangout_Staff"""
 
 
 class Event_StaffForm(forms.ModelForm):

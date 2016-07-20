@@ -13,6 +13,17 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+   'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+}
+
+#REST_SESSION_LOGIN = False
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
@@ -42,6 +53,8 @@ EMAIL_HOST_USER = "metawing30@gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = "metawing@30"
 EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 from config import *
 
@@ -95,6 +108,8 @@ INSTALLED_APPS = (
     'allauth.socialaccount',
     'easy_thumbnails',
     'image_cropping',
+    'article',
+    'embed_video',
 )
 
 

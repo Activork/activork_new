@@ -7,9 +7,12 @@ from django.template.context import RequestContext
 from notifications.signals import notify
 from .models import MyUser
 from allauth.account.views import SignupView, LoginView
+from allauth.account.models import EmailAddress
 from allauth.account.forms import LoginForm, SignupForm
+from django.contrib.sessions.models import Session
 
-from allauth.account.utils import (get_next_redirect_url, complete_signup,
+
+from allauth.account.utils import (get_next_redirect_url, send_email_confirmation,complete_signup,
                     get_login_redirect_url, perform_login,
                     passthrough_next_redirect_url, url_str_to_user_pk,
                     logout_on_password_change)
@@ -19,9 +22,129 @@ from django.http import (HttpResponseRedirect, Http404,
                          HttpResponsePermanentRedirect)
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.contrib.auth import load_backend, login
+from django.conf import settings
 
 #api serializers
 from .models import MyUserSerializer
+from django.contrib import auth
+from django.core.mail import send_mail
+#from django.contrib.auth.decorators import get_user_object
+
+
+def get_user_object(fun):
+        def get_user(request,*args,**kwargs):
+                session_key = request.META['HTTP_SESSION_ID']
+                session = Session.objects.get(session_key=session_key)
+                user_id = session.get_decoded().get('_auth_user_id')
+                request.user = MyUser.objects.get(pk=user_id)
+
+                return fun(request,*args,**kwargs)
+        return get_user
+
+
+
+
+@api_view(['POST'])
+def mobile_social_signup(request):
+	if request.method == "POST":
+		username = request.data["username"]
+		if MyUser.objects.filter(username=username).exists():
+			username = username + request.data["uid"]
+		else:
+			username = username
+		first_name = username
+		email = request.data["email"]
+		user = MyUser(username=username,first_name=first_name,email=email,is_active = True, is_staff=False,is_superuser=False,phone_no = "")
+		user.save()
+
+		uid = request.data["uid"] 
+		provider = request.data["provider"]
+		extra_data = request.data["ectra_data"]
+
+		social_obj = SocialAccount(user=user,provider=provider,uid=uid,extra_data=extra_data)
+		social_obj.save()
+
+	else:
+		user = User.objects.get(username = request.data["username"])
+
+	if not hasattr(user,'backend'):
+		for backend in settings.AUTHENTICATION_BACKENDS:
+			if user == load_backend(backend).get_user(user.pk):
+				user.backend= backend
+				break
+	if hasattr(user,'backend'):
+		login(request,user)
+
+
+	serializer = MyUserSerializer(user)
+	return Response({'user_data':serializer.data,'SESSION_ID':reuest.session.session_key})	
+					
+
+
+@api_view(['POST'])
+@get_user_object
+def mobile_change_password(request):
+	if request.method == "POST":
+		user = request.user	
+		if user:
+			new_password = request.data['new_password']
+			user.set_password(new_password)
+			user.save()
+			return Response("Changed Sucessfully")
+
+		else:
+			return Response("please login")
+
+
+@api_view(['POST','GET'])
+def mobile_forgot_password(request):
+	print request.method
+	if request.method == "POST":
+		
+		email = request.data['email']
+		print type(email)
+		user_check = MyUser.objects.filter(email=email).exists()
+		if not user_check:
+			return Response("No user exists with this email")
+
+		else:
+			user = MyUser.objects.get(email=email)
+			print user
+			
+			send_mail('Forgot Password',"Change your password http://127.0.0.1:8000/mobile/reset/password/?user="+str(user.id)+"",'metawing30@gmail.com',[str(email)])
+			
+		return Response("Please follow the link sent on your registered email id")
+	
+	if request.method == "GET":
+		return Response("GET")
+		
+
+@api_view(['POST'])
+def mobile_reset_password(request):
+	if request.method == "POST":
+		password1 = request.data['password1']
+		password2 = request.data['password2']
+
+
+		if password1 != password2:
+			return Response("Passwords do not match")
+
+		else:
+			user_id = request.GET.get('user',None)
+			print user_id
+
+			if user_id != None:
+				user_obj = MyUser.objects.get(id=user_id)
+				user_obj.set_password(password1)
+				user_obj.save()
+				print user_obj.password
+				return Response("password changes sucessfully")
+			else:
+				return Response("Unsufficient data")
+
+
+
 
 
 
@@ -44,6 +167,7 @@ def mobile_signup(request):
 			user = MyUser(username=username,first_name=first_name,email=email,phone_no=phone_no,password=password)
 			user.set_password(user.password)
 			user.save()
+			send_email_confirmation(request, user, signup=True)
 		else:
 			return Response(serializer.errors)
 
@@ -53,27 +177,48 @@ def mobile_signup(request):
 
 
 
-@api_view(['GET','POST'])
+@api_view(['POST','GET'])
 def mobile_login(request):
+	#print request.method
+	#print request.data
 	if request.method == "POST":
+		print "in"
 		email = request.data["email"]
 		password = request.data["password"]
+		print email,password
 		user = auth.authenticate(email=email,password=password)
 
+		print user
 
 		if user:
+
+			has_verified_email = EmailAddress.objects.filter(user=user,verified=True).exists()
+
+
+                	if not has_verified_email:
+                        	return Response("please verify your email")
+
+
 			if user.is_active:
 				auth.login(request,user)
 				serializer = MyUserSerializer(user)
 				return Response({'user_data':serializer.data,'SESSION_ID':request.session.session_key})
 			else:
-				return Response("please verify your email")
+				return Response("your account is not active")
 
 		else:
 			return Response("Invlaid Credentials")
 
-	else:
-		return Response("Get Request")
+	if request.method == "GET":
+		return Response("in GET")
+
+
+@api_view(['POST'])
+def mobile_logout(request):
+	auth_logout(request)
+	return Response("Logged out")
+
+
 
 
 class MySignupView(SignupView):
@@ -144,6 +289,7 @@ class MyLoginView(LoginView):
         return ret
 
 def login(request):
+    send_mail('ada','dd','metawing30@gmail.com',['pdpreetidewani188@gmail.com'])
     return render(request,'login.html')
 
 

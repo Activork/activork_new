@@ -1,0 +1,97 @@
+<html>
+<head>
+
+<script type="text/javascript" src="js/script.js"></script> <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+
+<h2>Title : {{article_obj.name|title}}</h2>
+<h4>Content : {{article_obj.content}}</h4>
+<img src=/media/{{article_obj.image.url}}>
+{% csrf_token %}
+
+
+</body>
+
+
+<script>
+
+function getDateTime() {
+    var now     = new Date(); 
+    var year    = now.getFullYear();
+    var month   = now.getMonth()+1; 
+    var day     = now.getDate();
+    var hour    = now.getHours();
+    var minute  = now.getMinutes();
+    var second  = now.getSeconds(); 
+    if(month.toString().length == 1) {
+        var month = '0'+month;
+    }
+    if(day.toString().length == 1) {
+        var day = '0'+day;
+    }   
+    if(hour.toString().length == 1) {
+        var hour = '0'+hour;
+    }
+    if(minute.toString().length == 1) {
+        var minute = '0'+minute;
+    }
+    if(second.toString().length == 1) {
+        var second = '0'+second;
+    }   
+    var dateTime = year+' '+month+' '+day+' '+hour+' '+minute+' '+second;   
+     return dateTime;
+}
+
+
+function send_time(){
+
+	var time = getDateTime()
+	console.log(time);
+	$.ajax({
+
+        		url : "/update_time/", // the endpoint
+
+        		type : "POST", // http method
+
+        		data : { article_id : {{article_obj.id}}, end_time:time, csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()  }, // data sent with the post request
+
+
+
+        		// handle a successful response
+
+        		success : function(json) {
+
+            			
+
+            			console.log(json); // log the returned json to the console
+
+            			console.log("success"); // another sanity check
+
+        		},
+
+
+
+        		// handle a non-successful response
+
+        		error : function(xhr,errmsg,err) {
+
+            			console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+
+        		}
+
+    		});
+
+
+
+
+}
+
+
+window.setInterval(function(){
+  send_time()
+}, 5000);
+</script>
+
+</html>
