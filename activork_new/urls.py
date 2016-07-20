@@ -72,7 +72,7 @@ urlpatterns = patterns('',
     url(r'^mobile/comment_on_article/$','myapp.views.mobile_comment_on_article',name='mobile_comment_on_article'),
     url(r'^mobile/going_event/$','myapp.views.mobile_going_event',name='mobile_going_event'),
     url(r'^mobile/event_page/(?P<event_id>\d+)/$','myapp.views.mobile_event_page',name='mobile_event_page'),
-    url(r'^mobile/article_page/(?P<article_id>\d+)/$','myapp.views.mobile_article_page')
+    url(r'^mobile/article_page/(?P<article_id>\d+)/$','myapp.views.mobile_article_page'),
     url(r'^mobile/rate_article/$','myapp.views.mobile_rate_article',name='mobile_rate_article'),
     
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
