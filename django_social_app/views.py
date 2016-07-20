@@ -289,7 +289,7 @@ class MyLoginView(LoginView):
         return ret
 
 def login(request):
-    send_mail('ada','dd','metawing30@gmail.com',['pdpreetidewani188@gmail.com'])
+    #send_mail('ada','dd','metawing30@gmail.com',['pdpreetidewani188@gmail.com'])
     return render(request,'login.html')
 
 
