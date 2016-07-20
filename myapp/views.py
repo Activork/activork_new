@@ -41,7 +41,7 @@ def mobile_rate_article(request):
 
 @api_view(['GET'])
 @get_user_object
-def article_page(request,article_id):
+def mobile_article_page(request,article_id):
 	obj = Article.objects.get(id=article_id)
 	check = User_Stats.objects.filter(article=article_id).exists()
 
