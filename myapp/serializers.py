@@ -23,7 +23,7 @@ class UserStatusSerializer(serializers.ModelSerializer):
 		model = UserStatus
 
 
-class Event_CommentSerializer(serializers.MOdelSerializer):
+class Event_CommentSerializer(serializers.ModelSerializer):
 	commented_by = UserProfileSerializer()
 	class Meta:
 		model = Event_Comment
