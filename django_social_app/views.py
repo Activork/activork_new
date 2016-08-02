@@ -180,7 +180,7 @@ def send_email_confirmation(request, user, signup=False):
                                                            email,
                                                            signup=signup,
                                                            confirm=True)
-            assert email_addresspi_view(['GET','POST'])
+            #assert email_addresspi_view(['GET','POST'])
 
 
 
