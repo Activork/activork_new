@@ -213,7 +213,7 @@ def mobile_signup(request):
 			user = MyUser(username=username,first_name=first_name,email=email,phone_no=phone_no,password=password)
 			user.set_password(user.password)
 			user.save()
-			#send_email_confirmation(request, user, signup=True)
+			send_email_confirmation(request, user, signup=True)
 		else:
 			return Response(serializer.errors)
 
