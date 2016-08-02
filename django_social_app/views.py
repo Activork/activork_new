@@ -12,7 +12,7 @@ from allauth.account.forms import LoginForm, SignupForm
 from django.contrib.sessions.models import Session
 from django.contrib.auth.decorators import login_required
 
-from allauth.account.utils import (get_next_redirect_url, send_email_confirmation,complete_signup,
+from allauth.account.utils import (get_next_redirect_url, complete_signup,
                     get_login_redirect_url, perform_login,
                     passthrough_next_redirect_url, url_str_to_user_pk,
                     logout_on_password_change)
@@ -112,7 +112,7 @@ def mobile_forgot_password(request):
 			user = MyUser.objects.get(email=email)
 			print user
 			
-			send_mail('Forgot Password',"Change your password http://127.0.0.1:8000/mobile/reset/password/?user="+str(user.id)+"",'metawing30@gmail.com',[str(email)])
+			send_mail('Forgot Password',"Change your password https://activork-new.herokuapp.com/mobile/reset_password/?user="+str(user.id)+"",'metawing30@gmail.com',[str(email)])
 			
 		return Response("Please follow the link sent on your registered email id")
 	
@@ -144,12 +144,47 @@ def mobile_reset_password(request):
 				return Response("Unsufficient data")
 
 
+def send_email_confirmation(request, user, signup=False):
+    """
+    E-mail verification mails are sent:
+    a) Explicitly: when a user signs up
+    b) Implicitly: when a user attempts to log in using an unverified
+    e-mail while EMAIL_VERIFICATION is mandatory.
+
+    Especially in case of b), we want to limit the number of mails
+    sent (consider a user retrying a few times), which is why there is
+    a cooldown period before sending a new mail.
+    """
+    from allauth.account.models import EmailAddress, EmailConfirmation
+
+    COOLDOWN_PERIOD = timedelta(minutes=3)
+    email = user.email
+    if email:
+        try:
+            email_address = EmailAddress.objects.get_for_user(user, email)
+            if not email_address.verified:
+                send_email = not EmailConfirmation.objects \
+                    .filter(sent__gt=now() - COOLDOWN_PERIOD,
+                            email_address=email_address) \
+                    .exists()
+                if send_email:
+                    email_address.send_confirmation(request,
+                                                    signup=signup)
+            else:
+                send_email = False
+        except EmailAddress.DoesNotExist:
+            send_email = True
+            email_address = EmailAddress.objects.add_email(request,
+                                                           user,
+                                                           email,
+                                                           signup=signup,
+                                                           confirm=True)
+            assert email_addresspi_view(['GET','POST'])
 
 
 
 
 
-@api_view(['GET','POST'])
 def mobile_signup(request):
 	if request.method == "GET":
 		user = MyUser.objects.all()
@@ -161,7 +196,15 @@ def mobile_signup(request):
 		if serializer.is_valid():
 			username = request.data["username"]
 			first_name = username
-			email = request.data["email"]	
+			email = request.data["email"]
+			check_username = MyUser.objects.filter(username=username).exists()
+			if check_username:
+				return Response("Username Already Exists, Please enter anothe one")	
+
+			check_email = MyUser.objects.filter(email=email).exists()
+			if check_email:
+				return Response("Email Already Exists")
+
 			phone_no = request.data["phone_no"]
 			password = request.data["password"]
 			user = MyUser(username=username,first_name=first_name,email=email,phone_no=phone_no,password=password)
