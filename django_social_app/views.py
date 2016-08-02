@@ -194,11 +194,11 @@ def mobile_signup(request):
 		return Response(serializer.data)
 
 	if request.method == "POST":
-		serializer = MyUserSerializer(data=request.data)
+		serializer = MyUserSerializer(data=request.DATA)
 		if serializer.is_valid():
-			username = request.data["username"]
+			username = request.DATA["username"]
 			first_name = username
-			email = request.data["email"]
+			email = request.DATA["email"]
 			check_username = MyUser.objects.filter(username=username).exists()
 			if check_username:
 				return Response("Username Already Exists, Please enter anothe one")	
@@ -207,8 +207,8 @@ def mobile_signup(request):
 			if check_email:
 				return Response("Email Already Exists")
 
-			phone_no = request.data["phone_no"]
-			password = request.data["password"]
+			phone_no = request.DATA["phone_no"]
+			password = request.DATA["password"]
 			user = MyUser(username=username,first_name=first_name,email=email,phone_no=phone_no,password=password)
 			user.set_password(user.password)
 			user.save()
