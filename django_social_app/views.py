@@ -216,15 +216,19 @@ def mobile_signup(request):
 			user = MyUser(username=username,first_name=first_name,email=email,phone_no=phone_no,password=password)
 			user.set_password(user.password)
 			user.save()
+
+			session_id = request.session._get_or_create_session_key()
+
+
 		
-			session_id = request.session._session_key
+			#session_id = request.session._session_key
 			send_email_confirmation(request, user, signup=True)
 		else:
 			return Response(serializer.errors)
 
 
 		serializer = MyUserSerializer(user)
-		return Response({'user_data':serializer.data,'SESSION_ID':request.session})
+		return Response({'user_data':serializer.data,'SESSION_ID':session_id})
 
 
 
