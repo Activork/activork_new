@@ -184,7 +184,9 @@ def send_email_confirmation(request, user, signup=False):
 
 
 
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def mobile_signup(request):
 	if request.method == "GET":
 		user = MyUser.objects.all()
