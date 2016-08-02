@@ -331,7 +331,7 @@ def update_status(request):
 @get_user_object
 def mobile_update_status(request):
 	user=request.user
-	return Response({"name":user.username})
+	#return Response({"name":user.username})
 	userprofile = UserProfile.objects.get(user=user)
 	check = UserStatus.objects.filter(user=userprofile).exists()
 	status = request.data['status']
