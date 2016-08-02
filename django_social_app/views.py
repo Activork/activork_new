@@ -217,7 +217,7 @@ def mobile_signup(request):
 			user.set_password(user.password)
 			user.save()
 		
-			session_id = request.session.session_key
+			session_id = request.session._session_key
 			send_email_confirmation(request, user, signup=True)
 		else:
 			return Response(serializer.errors)
