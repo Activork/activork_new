@@ -224,7 +224,7 @@ def mobile_signup(request):
 
 
 		serializer = MyUserSerializer(user)
-		return Response({'user_data':serializer.data,'SESSION_ID':session_id})
+		return Response({'user_data':serializer.data,'SESSION_ID':request.session})
 
 
 
