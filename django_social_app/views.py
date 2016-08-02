@@ -36,6 +36,9 @@ from django.core.mail import send_mail
 def get_user_object(fun):
         def get_user(request,*args,**kwargs):
                 session_key = request.META['HTTP_SESSION_ID']
+
+		print session_key
+
                 session = Session.objects.get(session_key=session_key)
                 user_id = session.get_decoded().get('_auth_user_id')
                 request.user = MyUser.objects.get(pk=user_id)
@@ -217,11 +220,14 @@ def mobile_signup(request):
 			user.set_password(user.password)
 			user.save()
 
-			session_id = request.session._get_or_create_session_key()
+			#session_id = request.session._get_or_create_session_key()
 
-
+			request.session.modified = True
 		
-			#session_id = request.session._session_key
+			session_id = request.session._session_key
+
+			print session_id
+
 			send_email_confirmation(request, user, signup=True)
 		else:
 			return Response(serializer.errors)
@@ -245,6 +251,8 @@ def mobile_login(request):
 
 		print user
 
+		print request.session._session_key
+
 		if user:
 
 			has_verified_email = EmailAddress.objects.filter(user=user,verified=True).exists()
@@ -257,7 +265,7 @@ def mobile_login(request):
 			if user.is_active:
 				auth.login(request,user)
 				serializer = MyUserSerializer(user)
-				return Response({'user_data':serializer.data,'SESSION_ID':request.session.session_key})
+				return Response({'user_data':serializer.data,'SESSION_ID':request.session._session_key})
 			else:
 				return Response("your account is not active")
 
