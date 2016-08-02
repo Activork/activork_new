@@ -16,6 +16,30 @@ from django.contrib.auth.decorators import login_required
 from article.models import *
 from .serializers import *
 
+
+@api_view(['POST'])
+@get_user_object
+def mobile_follow_user(request):
+        if request.method == "POST":
+                user_id = request.data["followed_by"]
+                user_obj = UserProfile.objects.get(id=user_obj)
+                obj = Follow_User(follow=request.user,followed_by=user_obj)
+                obj.save()
+                return Response("follow")
+
+
+@api_view(['POST'])
+@get_user_object
+def mobile_unfollow_user(request):
+        if request.method == "POST":
+                user_id = request.data["unfollowed_by"]
+                user_obj = UserProfile.objects.get(id=user_obj)
+                obj = Follow_User.objects.get(follow=request.user,followed_by=user_obj)
+                obj.delete()
+                return Response("unfollow")
+
+
+
 @api_view(['POST'])
 @get_user_object
 def mobile_rate_article(request):
@@ -86,6 +110,56 @@ def mobile_article_page(request,article_id):
 	comment_serializer = CommentSerializer(all_comment,many=True)
 
 	return Response({'all_comment':comment_serializer.data,'article_obj':obj_serializer.data,'like_count':like_count,'comment_count':comment_count,'rating':rating,'similar_article':similar_serializer.data})
+
+
+
+@api_view(['GET'])
+@get_user_object
+def mobile_event_page(request,event_id):
+	event_obj = Event.objects.get(id=event_id)
+	going_check = Event_Liked.objects.filter(event=event_obj).exists()
+	comment_check = Event_Comment.objects.filter(event=event_obj).exists()
+
+	if going_check:
+		going_count = len(Event_Liked.objects.filter(event=event_obj,going=True))
+		maybe_count = len(Event_Liked.objects.filter(event=event_obj,like=True))
+	else:
+		going_count = 0
+		maybe_count = 0
+
+
+	if comment_check:
+		all_comment = Event_Comment.objects.filter(event=event_obj)
+		comment_count = len(all_comment)
+	else:
+		comment_count = 0
+		all_comment = 0
+
+	similar_obj = SimilarEvent.objects.get(event=event_obj)
+	similar_event = []
+
+	for i in similar_obj.selected.split(","):
+		similar_event += Event.objects.filter(id=i)
+
+
+	user_friend = User_Connection.objects.filter(sender__user=user,receiver__user=user)
+
+	
+	friends_going = Event_Liked.objects.filter(event=event_obj).filter(user__user__in=user_friend,going=True).values_list('user',flat=True)[:5]
+
+
+	if len(friends_going) == 0:
+		friends_going = Event_Liked.objects.filter(event=event_obj).order_by('-id').values_list('user',flat=True)[:5]
+
+
+	similar_serializer = EventSerializer(similar_event,many=True)
+	obj_serializer = EventSerializer(obj)
+
+	comment_serializer = Event_CommentSerializer(all_comment,many=True)
+
+	friends_going = UserProfileSerialzer(friends_going,many=True)
+
+	return Response({'all_comment':comment_serializer.data,'event_obj':event_obj.serializer,'going_count':going_count,'maybe_count':maybe_count,'comment_count':comment_count,'similar_event':similar_event,'friends_going':friends_going.data})
 
 
 @login_required
@@ -257,6 +331,7 @@ def update_status(request):
 @get_user_object
 def mobile_update_status(request):
 	user=request.user
+	return Response({"name":user.username})
 	userprofile = UserProfile.objects.get(user=user)
 	check = UserStatus.objects.filter(user=userprofile).exists()
 	status = request.data['status']
