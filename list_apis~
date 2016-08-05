@@ -34,16 +34,16 @@ API LIST:
 32.  UnFollow User
 33.  Filter By Latest(Other Profile)
 34.  Filter By Most Popular(Other Profile)
-35.  
+35.  Filter By Nearest(Other Profile)
 36.  My Profile Page
 37.  Edit Profile
 38.  Filter By Latest(My Profile)
 39.  Filter By Most Popular(My Profile)
-40.  
-41.  
+40.  Filter By Nearest(My Profile)
+41.  Sort By : View All(Other Profile)
 42.  Sort By : My Followers(Other Profile)
 43.  Sort By : Friends(Other Profile)
-44.  
+44.  Sort By : Common Friends(Other Profile)
 45.  Sort By : View All(Profile)
 46.  Sort By : View NearBy(Profile)
 47.  Delete (My Profile)

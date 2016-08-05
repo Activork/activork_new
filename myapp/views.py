@@ -487,8 +487,10 @@ def mobile_get_details(request):
                         obj.save()
                 else:
                         obj = User_Details_Earlier.objects.get(info=device_id)
+			print "in",request.data['interests']
 			interests = request.data.getlist('interests')
 			interests_key = []
+			print "list",interests
 			for i in interests[0].split(","):
 				if i == "Travel":
 					interests_key.append("item_key1")
@@ -527,7 +529,17 @@ def save_similar_event(request):
 
 			#NOt implemented depending upon distance
 
-                        similar_obj = SimilarEvent.objects.get(id=similar_id)
+
+			check =  SimilarEvent.objects.filter(event=similar_id).exists()
+                        if check:
+
+                                similar_obj = SimilarEvent.objects.get(event=similar_id)
+                        else:
+                                event = Event.objects.get(id=similar_id)
+                                similar_obj = SimilarEvent(event=event)
+
+
+                       # similar_obj = SimilarEvent.objects.get(id=similar_id)
 
                         similar_obj.selected = ",".join(ids)
 

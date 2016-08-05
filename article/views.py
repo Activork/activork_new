@@ -96,15 +96,25 @@ def save_similar_article(request):
 		else:
 			ids = request.POST.getlist('ids[]')
 
-			print ids
+			print "ids",ids
 
-			similar_obj = SimilarArticle.objects.get(id=similar_id)
+			check =  SimilarArticle.objects.filter(id=similar_id).exists()
+
+			print "check",check
+			if check:	
+
+				similar_obj = SimilarArticle.objects.get(id=similar_id)
+			
+
+			print "similar",similar_obj
 
 			similar_obj.selected = ",".join(ids)
 
 			similar_obj.save()
+
+			print "ss",similar_obj.selected
 			
-			return HttpResponse(similar_obj.selected)
+			return HttpResponse("success")
 
 
 
