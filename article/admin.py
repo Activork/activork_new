@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SimilarArticle,Article
+from .models import *
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 
@@ -64,5 +64,20 @@ class SimilarArticleAdmin(admin.ModelAdmin):
 		#print "similar",similar_obj
 		return qs"""
 
+
+class CommentAdmin(admin.ModelAdmin):
+	pass
+
+class LikeAdmin(admin.ModelAdmin):
+	pass
+
+class Follow_UserAdmin(admin.ModelAdmin):
+	pass
+
+
+
+admin.site.register(Like,LikeAdmin)
+admin.site.register(Comment,CommentAdmin)
+admin.site.register(Follow_User,Follow_UserAdmin)
 admin.site.register(Article,ArticleAdmin)
 admin.site.register(SimilarArticle,SimilarArticleAdmin)

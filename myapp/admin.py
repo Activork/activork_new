@@ -1,12 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
-from .models import Upload_Image,User_Connection,UserStatus,UserProfile,ProfileLimitation,Hangout,Event,Event_ImageGallery,SimilarEvent,Event_Staff,EventPermission, Event_Liked
+#from .models import Upload_Image,User_Connection,UserStatus,UserProfile,ProfileLimitation,Hangout,Event,Event_ImageGallery,SimilarEvent,Event_Staff,EventPermission, Event_Liked
 from django.db.models import Q
 from .forms import Event_StaffForm
 from django_social_app.models import MyUser
 from image_cropping.admin import ImageCroppingMixin
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
+
+from .models import *
 
 
 
@@ -330,8 +332,17 @@ class Upload_ImageAdmin(ImageCroppingMixin, admin.ModelAdmin):
 class User_ConnectionAdmin(admin.ModelAdmin):
 	pass
 
+class User_Details_EarlierAdmin(admin.ModelAdmin):
+	pass
 
+class User_DetailsAdmin(admin.ModelAdmin):
+	pass
 
+class EventPermissionAdmin(admin.ModelAdmin):
+	pass
+
+class Event_CommentAdmin(admin.ModelAdmin):
+	pass
 
 
 class SimilarEventAdmin(admin.ModelAdmin):
@@ -369,4 +380,7 @@ admin.site.register(Event_Staff,Event_StaffAdmin)
 admin.site.register(Event_ImageGallery,Event_ImageGalleryAdmin)
 admin.site.register(Event,EventAdmin)
 admin.site.register(Hangout,HangoutAdmin)
-
+admin.site.register(User_Details_Earlier,User_Details_EarlierAdmin)
+admin.site.register(User_Details,User_DetailsAdmin)
+admin.site.register(EventPermission,EventPermissionAdmin)
+admin.site.register(Event_Comment,Event_CommentAdmin)
