@@ -13,7 +13,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+#SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
