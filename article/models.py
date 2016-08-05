@@ -22,7 +22,7 @@ class Article(models.Model):
 	#posted_by = models.CharField(max_length=255,default="Activork")
 	posted_by = models.ForeignKey(MyUser,default=1)
 	video = EmbedVideoField(blank=True)
-	position = GeopositionField(null=True)
+	position = GeopositionField(blank=True,null=True)
 	approval_flag = models.BooleanField(default=True)
 	share_with = models.CharField(max_length=20,choices=MY_SHARES,default="public")
 	name = models.CharField(max_length=255,blank=True)
