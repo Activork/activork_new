@@ -52,6 +52,8 @@ urlpatterns = patterns('',
     url(r'^like_article/$','article.views.like_article',name='like_event'),
     url(r'^comment_on_article/$','article.views.comment_on_article',name='comment_on_article'),
     url(r'^rate_article/$','article.views.rate_article',name='rate_article'),
+    #url(r'^follow_user/$','article.views.follow_user',name='follow_user'),
+    #url(r'^unfollow_user/$','article.views.unfollow_user',name='unfollow_user'),
    
 #app urls
 
@@ -74,6 +76,8 @@ urlpatterns = patterns('',
     #url(r'^mobile/event_page/(?P<event_id>\d+)/$','myapp.views.mobile_event_page',name='mobile_event_page'),
     url(r'^mobile/article_page/(?P<article_id>\d+)/$','myapp.views.mobile_article_page'),
     url(r'^mobile/rate_article/$','myapp.views.mobile_rate_article',name='mobile_rate_article'),
+    #url(r'^mobile/follow_user/$','myapp.views.follow_user',name='follow_user'),
+    #url(r'^mobile/unfollow_user/$','myapp.views.unfollow_user',name='unfollow_user'),
     
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

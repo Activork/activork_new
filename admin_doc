@@ -1,0 +1,31 @@
+
+	---------------------------------------------- Admin Doc  ---------------------------------------
+
+
+	MyApp:
+		1. UserProfile : for storing user related data
+		2. User_Details_Earlier : for details to be stored before signup
+		3. User_Details : for details to be stored after signup
+		4. Hangout : for hangout details
+		5. Event : for event details
+		6. Event_ImageGallery : for image gallery of event
+		7. Event_Staff : for event staff info
+		8. EventPermission : for giving rights to other user for making changes in event related data
+		9. User_Connection : for add as a friend
+		10. Event_Liked : for liking an event
+		11. UserStatus : for storing user status
+		12. Upload_Image : for image cropping
+		13. SimilarEvent : for similar events
+		14. Event_Comment : for commenting on event
+
+
+	Django_social_app:
+		1. User : for user details
+	
+
+	Article:
+		1. Article : for article details
+		2. Comment : for article comments
+		3. Like : for article like
+		4. Follow_User : for following user
+		5. SimilarArticle : for similar article

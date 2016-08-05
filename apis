@@ -1,0 +1,50 @@
+			----------------------------------	ACTIVORK APIS ---------------------------
+
+
+												Date : 20/07/2016
+
+1. Signup:
+	URL			:	https://activork-new.herokuapp.com/mobile/signup/
+	TYPE		:	POST
+	Parameters	:	username, email, phone_no, password
+	Response	:	user data, SESSION_ID (required for login)
+
+
+2. Login:
+	URL			:	https://activork-new.herokuapp.com/mobile/login/
+	TYPE		:	POST
+	Parameters	:	email, password
+	Response	:	user data, SESSION_ID (required for login)
+
+
+3. Logout:
+	URL			:	https://activork-new.herokuapp.com/mobile/logout/
+	TYPE		:	POST
+	Response	:	Logged out
+
+
+
+4. Forget Password:
+	URL			:	https://activork-new.herokuapp.com/mobile/forgot_password/
+	TYPE		:	POST
+	Parameters	:	email
+	Response	:	"Please follow the link sent on your registered email id"
+
+
+5. Reser Password:
+	URL			:	https://activork-new.herokuapp.com/mobile/reset_password/?user=user_id
+	TYPE		:	POST
+	Parameters	:	password1, password2
+	Response	:	"password changes sucessfully"
+
+
+6. Change Password:
+	URL			:	https://activork-new.herokuapp.com/mobile/change_password/
+	TYPE		:	POST
+	Parametres	:	new_password
+	Response	:	"Changed Sucessfully"
+
+
+
+
+	
