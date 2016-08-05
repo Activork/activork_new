@@ -89,7 +89,7 @@ def like_article(request):
 def save_similar_article(request):
 	if request.method == "POST" and request.is_ajax():
 		similar_id = int(request.POST['similar_id'])
-		return HttpResponse(similar_id)
+		#return HttpResponse(similar_id)
 		print similar_id
 		if similar_id == 0:
 			return HttpResponse("no saving")
