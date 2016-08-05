@@ -3,6 +3,7 @@ from .models import MyUser
 
 
 class MyUserAdmin(admin.ModelAdmin):
+	fields=(('username','first_name','last_name'),'email','password','user_permissions','is_staff','is_active','groups','is_superuser','last_login','date_joined')
 	def save_model(self, request, obj, form, change):
     		# Override this to set the password to the value in the field if it's
     		# changed.
