@@ -17,6 +17,23 @@ from django.contrib.auth.decorators import login_required
 
 utc=pytz.UTC
 
+def follow_user(request):
+	if request.method == "POST" and request.is_ajax():
+		user_id = request.POST["followed_by"]
+		user_obj = UserProfile.objects.get(id=user_obj)
+		obj = Follow_User(follow=request.user,followed_by=user_obj)
+		obj.save()
+		return HttpResponse("follow")
+
+
+def unfollow_user(request):
+	if request.method == "POST" and request.is_ajax():
+                user_id = request.POST["unfollowed_by"]
+                user_obj = UserProfile.objects.get(id=user_obj)
+                obj = Follow_User.objects.get(follow=request.user,followed_by=user_obj)
+                obj.delete()
+		return HttpResponse("unfollow")
+               
 
 
 def rate_article(request):
