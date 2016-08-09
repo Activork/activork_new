@@ -135,16 +135,21 @@ def mobile_reset_password(request):
 			return Response("Passwords do not match")
 
 		else:
-			user_id = request.GET.get('user',None)
+			user_id = request.GET.get('user',"Not exists")
 			print user_id
 			return Response(user_id)
 
-			if user_id != None:
-				user_obj = MyUser.objects.get(id=user_id)
-				user_obj.set_password(password1)
-				user_obj.save()
-				print user_obj.password
-				return Response("password changes sucessfully")
+			if user_id != "Not exists":
+				check = MyUser.objects.filter(id=user_id).exists()
+
+				if check:
+					user_obj = MyUser.objects.get(id=user_id)
+					user_obj.set_password(password1)
+					user_obj.save()
+					print user_obj.password
+					return Response("password changes sucessfully")
+				else:
+					return Response("No user exists with this email id")
 			else:
 				return Response("Unsufficient data")
 
