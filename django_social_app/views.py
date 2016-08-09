@@ -137,6 +137,7 @@ def mobile_reset_password(request):
 		else:
 			user_id = request.GET.get('user',None)
 			print user_id
+			return Response(user_id)
 
 			if user_id != None:
 				user_obj = MyUser.objects.get(id=user_id)
