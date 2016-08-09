@@ -136,10 +136,22 @@ def mobile_reset_password(request):
 
 		else:
 			user_id = request.GET.get('user',"Not exists")
-			print user_id
-			return Response(user_id)
+			
+			#return Response(user_id)
 
-			if user_id != "Not exists":
+			print "user",user_id
+
+			try:
+				user_id = int(user_id)
+
+			except:
+				user_id = None
+
+
+			print "user",user_id
+
+
+			if user_id != None:
 				check = MyUser.objects.filter(id=user_id).exists()
 
 				if check:
