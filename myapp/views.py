@@ -16,14 +16,170 @@ from django.contrib.auth.decorators import login_required
 from article.models import *
 from .serializers import *
 from rest_framework.response import Response
+import math
+import re
+
+
+
+
+@api_view(['GET'])
+def mobile_earlier_home_page(request):
+	device_id = request.GET.get('device_id','1')
+	user_detail_obj = User_Details_Earlier.objects.get(info=device_id)
+	articles = []
+	for i in user_detail_obj.interest:
+		 articles += Article.objects.filter(interest__contains=i)
+
+	article = set(articles)
+	
+	event = []
+	for i in user_detail_obj.interest:
+		event += Event.objects.filter(interest__contains=i)
+
+
+	event  = set(event)
+
+	#user_friend = User_Connection.objects.filter(sender__user=user,receiver__user=user)
+
+	"""all_event = {}
+	for j in event:
+		all_event[j] = []
+		interested_events = Event_Liked.objects.filter(event=i).filter(user__user__in=user_friend,going=True).values_list('user',flat=True)[:5]
+
+	for i,j in all_event.iteritems():
+		if len(j) == 0:
+			j = Event_Liked.objects.filter(event=j).order_by('-id').values_list('user',flat=True)[:5] 
+		else:
+			j += Event_Liked.objects.filter(event=j).order_by('-id').values_list('user',flat=True)[len(j):5]"""
+	
+	all_article_data = []
+	
+	for i in article:
+		print i
+		all_article = {}
+		all_article['article'] = {}
+		serializer_article = ArticleSerializer(i)
+		all_article['article']['article_details'] = serializer_article.data
+		all_article['article']['like'] =  Like.objects.filter(article=i).count()
+		all_article['article']['comment'] = Comment.objects.filter(article=i).count()		
+		all_article_data.append(all_article['article'])
+
+	event_dict = {}
+
+	event_data = []	
+	for i in event:
+		event_dict['event'] = {}
+		serializer_event=EventSerializer(i)
+		event_dict['event']['event_details'] = serializer_event.data
+		event_data.append(event_dict['event'])
+
+	return Response({'all_article':all_article_data,'all_event':event_data})
+
+@api_view(['POST'])
+@get_user_object
+def mobile_fill_userprofile(request):
+	if request.method == "POST":
+		user = request.user
+		keys = request.data.keys()
+		check = UserProfile.objects.filter(user=request.user).exists()
+
+
+		if check:
+			userprofile_obj = UserProfile.objects.get(user=request.user)
+			for j in keys:
+				#print "key",j
+				if j == "age":
+					print "age",request.data['age']
+					userprofile_obj.age = request.data['age']
+					continue
+				if j == "designation":
+					userprofile_obj.designation = request.data[j] 	
+					continue
+				if j == "working_at":
+					userprofile_obj.working_at = request.data[j]
+					continue
+
+				if j == "profile_image":	
+					userprofile_obj.profile_image = request.data[j]
+					continue
+
+				if j == "college":
+					userprofile_obj.college = request.data[j]
+					continue
+
+				if j == "channels":
+					ch = request.data.getlist('channels')
+					if len(ch) >= 1:
+						channels = []
+						for i in ch[0].split(","):
+                                        		if i == "Travel":
+                                                		channels.append("item_key1")
+                                        		elif i == "Fitness":
+                                                		channels.append("item_key2")
+                                        		elif i == "Music":
+                                                		channels.append("item_key3")
+                                        		elif i == "Hobbies":
+                                                		channels.append("item_key4")
+                                        		else:
+                                                		channels.append("item_key5")
+                                		channels = ",".join(channels)
+						userprofile_obj.channels =channels
+		
+
+
+			userprofile_obj.save()
+			#print userprofile_obj.age
+			return Response("updated profile")
+
+		else:
+			profile_image = request.data['profile_image']
+			age = request.data['age']
+			designation = request.data['designation']
+			try:
+				ch = request.data.getlist('channels')
+			except:
+				ch = []
+	
+			if len(ch) >= 1:
+				print "in"
+				channels = []
+				for i in ch[0].split(","):
+					if i == "Travel":
+                                        	channels.append("item_key1")
+                                	elif i == "Fitness":
+                                        	channels.append("item_key2")
+                                	elif i == "Music":
+                                        	channels.append("item_key3")
+                                	elif i == "Hobbies":
+                                        	channels.append("item_key4")
+                                	else:
+                                        	channels.append("item_key5")
+				channels = ",".join(channels)
+			else:
+				return Response("Please select interests")
+		
+			print channels
+
+			working_at = request.data['working_at']
+			college = request.data['college']
+			about = request.data['about']
+
+			if len(ch) >= 1:
+				userprofile_obj = UserProfile(user=user,profile_image=profile_image,age=age,designation=designation,channels=channels,working_at=working_at,college=college,about=about)
+			userprofile_obj.save()
+
+		return Response("success")
+
 
 @api_view(['POST'])
 @get_user_object
 def mobile_follow_user(request):
         if request.method == "POST":
                 user_id = request.data["followed_by"]
-                user_obj = UserProfile.objects.get(id=user_obj)
-                obj = Follow_User(follow=request.user,followed_by=user_obj)
+		user_id = MyUser.objects.get(id=user_id)
+                user_obj = UserProfile.objects.get(user=user_id)
+		follow = UserProfile.objects.get(user=request.user)
+                obj = Follow_User(follow=follow,followed_by=user_obj)
                 obj.save()
                 return Response("follow")
 
@@ -33,8 +189,10 @@ def mobile_follow_user(request):
 def mobile_unfollow_user(request):
         if request.method == "POST":
                 user_id = request.data["unfollowed_by"]
-                user_obj = UserProfile.objects.get(id=user_obj)
-                obj = Follow_User.objects.get(follow=request.user,followed_by=user_obj)
+		user_id = MyUser.objects.get(id=user_id)
+                user_obj = UserProfile.objects.get(user=user_id)
+		follow = UserProfile.objects.get(user=request.user)
+                obj = Follow_User.objects.get(follow=follow,followed_by=user_obj)
                 obj.delete()
                 return Response("unfollow")
 
@@ -44,8 +202,17 @@ def mobile_unfollow_user(request):
 @get_user_object
 def mobile_rate_article(request):
 	article_id = request.data['article_id']
-	rating = request.data['rating']
+	rating = float(request.data['rating'])
+	#print "rating",rating,round(rating)
+	rating = round(rating)
 	article_obj = Article.objects.get(id=article_id)
+
+	check = UserProfile.objects.filter(user=request.user).exists()
+
+	if not check:
+		return Response("Plase fill your profile first")
+
+
 	userprofile_obj = UserProfile.objects.get(user=request.user)
 	check = Like.objects.filter(article=article_obj,user=userprofile_obj).exists()
 
@@ -185,7 +352,15 @@ def like_event(request):
 def mobile_like_event(request):
         event_id = request.data['event_id']
         event_obj = Event.objects.get(id=event_id)
-        userprofile_obj = Userprofile.objects.get(user=request.user)
+
+	check = UserProfile.objects.filter(user=request.user).exists()
+
+        if not check:
+                return Response("Please fill your profile first")
+
+
+
+        userprofile_obj = UserProfile.objects.get(user=request.user)
         check = Event_Liked.objects.filter(event=event_obj,user=userprofile_obj).exists()
 
         if check:
@@ -213,34 +388,88 @@ def comment_on_event(request):
 		return HttpResponse(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 @get_user_object
 def mobile_comment_on_event(request):
-                event_id = request.data['event_id']
-                event_obj = Event.objects.get(id=event_id)
-                comment = request.data['comment']
-                userprofile_obj = UserProfile.objects.get(user=request.user)
-                comment_obj = Event_Comment(event=event_obj,comment=comment,commented_by=userprofile_obj)
-                comment_obj.save()
-                event_comment_obj = Event_Comment.objects.filter(event=event_obj)
-                serializer = Event_CommentSerializer(event_comment_obj,many=True)
-                return Response({'comments':serializer.data})
+		if request.method == "POST":
+                	event_id = request.data['event_id']
+                	event_obj = Event.objects.get(id=event_id)
+                	comment = request.data['comment']
+
+			check = UserProfile.objects.filter(user=request.user).exists()
+			if not check:
+				return Response("Please fill your profile first")
+			if not re.search(r'^[a-zA-Z]+',comment,re.I):
+				return Response("Please enter a comment")
+
+
+
+                	userprofile_obj = UserProfile.objects.get(user=request.user)
+                	comment_obj = Event_Comment(event=event_obj,comment=comment,commented_by=userprofile_obj)
+                	comment_obj.save()
+                	event_comment_obj = Event_Comment.objects.filter(event=event_obj)
+                	serializer = Event_CommentSerializer(event_comment_obj,many=True)
+                	return Response({'comments':serializer.data})
+
+
+		if request.method == "GET":
+
+			event_id = request.GET['event_id']
+                        event_obj = Event.objects.get(id=event_id)
+
+			event_comment_obj = Event_Comment.objects.filter(event=event_obj)
+
+			if len(event_comment_obj) == 0:
+                                return Response("No comments yet")
+
+
+			if len(event_comment_obj) > 1:
+                        	serializer = Event_CommentSerializer(event_comment_obj,many=True)
+			else:
+				serializer = Event_CommentSerializer(event_comment_obj)
+                        return Response({'comments':serializer.data})
 
 
 
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 @get_user_object
 def mobile_comment_on_article(request):
-                article_id = request.data['article_id']
-                article_obj = Article.objects.get(id=article_id)
-                comment = request.data['comment']
-                userprofile_obj = UserProfile.objects.get(user=request.user)
-                comment_obj = Comment(article=article_obj,comment=comment,commented_by=userprofile_obj)
-                comment_obj.save()
-                article_comment_obj = Comment.objects.filter(article=article_obj)
-                serializer = CommentSerializer(article_comment_obj,many=True)
-                return Response({'comments':serializer.data})
+		if request.method == "POST":
+                	article_id = request.data['article_id']
+                	article_obj = Article.objects.get(id=article_id)
+                	comment = request.data['comment']
+
+			check = UserProfile.objects.filter(user=request.user).exists()
+
+			if not check:
+				return Response("Please fill your profile first")
+	
+			if not re.search(r'^[a-zA-Z]+',comment,re.I):
+				return Response("Please enter a comment")
+
+                	userprofile_obj = UserProfile.objects.get(user=request.user)
+                	comment_obj = Comment(article=article_obj,comment=comment,commented_by=userprofile_obj)
+                	comment_obj.save()
+                	article_comment_obj = Comment.objects.filter(article=article_obj)
+                	serializer = CommentSerializer(article_comment_obj,many=True)
+                	return Response({'comments':serializer.data})
+
+		if request.method == "GET":
+			article_id = request.GET['article_id']
+                        article_obj = Article.objects.get(id=article_id)
+			article_comment_obj = Comment.objects.filter(article=article_obj)
+
+			if len(article_comment_obj) == 0:
+				return Response("No comments yet")
+
+
+			if len(article_comment_obj) > 1:
+                        	serializer = CommentSerializer(article_comment_obj,many=True)
+			else:
+				serializer = CommentSerializer(article_comment_obj)           
+                        return Response({'comments':serializer.data})
+
 
 
 @api_view(['POST'])
@@ -248,6 +477,11 @@ def mobile_comment_on_article(request):
 def mobile_like_article(request):
 	article_id = request.data['article_id']
 	article_obj = Article.objects.get(id=article_id)
+	check = UserProfile.objects.filter(user=request.user).exists()
+
+	if not check:
+		return Response("Please fill your profile first")
+
 	userprofile_obj = UserProfile.objects.get(user=request.user)
 	check = Like.objects.filter(article=article_obj,user=userprofile_obj).exists()
 
@@ -270,7 +504,14 @@ def mobile_like_article(request):
 def mobile_going_event(request):
         event_id = request.data['event_id']
         event_obj = Event.objects.get(id=event_id)
-        userprofile_obj = Userprofile.objects.get(user=request.user)
+
+	check = UserProfile.objects.filter(user=request.user).exists()
+
+	if not check:
+		return Response("Please fill your profile first")
+
+
+        userprofile_obj = UserProfile.objects.get(user=request.user)
         check = Event_Liked.objects.filter(event=event_obj,user=userprofile_obj).exists()
 
         if check:
@@ -332,19 +573,30 @@ def update_status(request):
 def mobile_update_status(request):
 	user=request.user
 	#return Response({"name":user.username})
+	check = UserProfile.objects.filter(user=user).exists()
+	if not check:
+		return Response("complete your profile first")
 	userprofile = UserProfile.objects.get(user=user)
 	check = UserStatus.objects.filter(user=userprofile).exists()
 	status = request.data['status']
-	public = request.data['public']
+	try:
+		public = request.data['public']
+	except:
+		public = ""
+	
 	
 	if check:
-		status_obj = UserStatus.objects.filter(user=userprofile)
+		status_obj = UserStatus.objects.get(user=userprofile)
 		status_obj.status = status
-		status_obj.public = public
+		if public != "":
+			status_obj.public = public
 		status_obj.save()
 
 	else:
-		status_obj = UserStatus(user=userprofile,status=status,public=public)
+		if public != "":
+			status_obj = UserStatus(user=userprofile,status=status,public=public)
+		else:
+			status_obj = UserStatus(user=userprofile,status=status)
 		status_obj.save()
 
 	serializer_userstatus = UserStatusSerializer(status_obj)
@@ -487,11 +739,22 @@ def mobile_get_details(request):
                         obj.save()
                 else:
                         obj = User_Details_Earlier.objects.get(info=device_id)
-			print "in",request.data['interests']
-			interests = request.data.getlist('interests')
+			latitude = request.data['latitude']
+			longitude = request.data['longitude']
+
+			try:
+				print "in",request.data['interests']
+				interests = request.data.getlist('interests')
+
+			except:
+				interests = []
+
+
 			interests_key = []
 			print "list",interests
-			for i in interests[0].split(","):
+			
+			if len(interests) >=1:
+			   for i in interests[0].split(","):
 				if i == "Travel":
 					interests_key.append("item_key1")
 				elif i == "Fitness":
@@ -506,14 +769,75 @@ def mobile_get_details(request):
 			interests_key = ",".join(interests_key)
 
 			print interests_key
-					
-                        obj.interest = interests_key
+
+			if len(interests_key) >= 1:								obj.interest = interests_key
+			obj.latitude = latitude
+			obj.longitude = longitude
+
+                        obj.save()
+			print obj.interest
+			return Response("interests updated")
+		
+                return Response("success")
+		
+
+
+@api_view(['POST'])
+@get_user_object
+def mobile_get_info(request):
+        if request.method == "POST":
+		
+		user = request.user
+		print "user",user
+
+                check = User_Details.objects.filter(user=user.id).exists()
+
+                if not check:
+			latitude = request.data['latitude']
+			longitude = request.data['longitude']
+                        obj = User_Details(user=user,latitude=latitude,longitude=longitude)
+                        obj.save()
+                else:
+                        obj = User_Details.objects.get(user=user)
+			latitude = request.data['latitude']
+			longitude = request.data['longitude']
+
+			try:
+				print "in",request.data['interests']
+				interests = request.data.getlist('interests')
+			except:
+				interests = []
+			interests_key = []
+			print "list",interests
+
+			if len(interests) >=1:
+			  for i in interests[0].split(","):
+				if i == "Travel":
+					interests_key.append("item_key1")
+				elif i == "Fitness":
+					interests_key.append("item_key2")
+				elif i == "Music":
+					interests_key.append("item_key3")
+				elif i == "Hobbies":
+					interests_key.append("item_key4")
+				else:
+					interests_key.append("item_key5")
+
+			interests_key = ",".join(interests_key)
+
+			print interests_key
+
+			if len(interests_key) >=1:
+                        	obj.interest = interests_key
+			obj.latitude = latitude
+			obj.longitude = longitude
                         obj.save()
 			print obj.interest
 			return HttpResponse("interests updated")
 		
                 return HttpResponse("success")
-		
+
+
 
 
 def save_similar_event(request):

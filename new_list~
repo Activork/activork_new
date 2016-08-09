@@ -1,0 +1,123 @@
+
+				_______NEXT_____________
+
+
+1. Without signup location:
+	URL : https://activork-new.herokuapp.com/mobile/get_details/
+	Type : POST
+	Paramter : device_id, latitude,longitude
+	Response : "success"
+
+2. Without signup interests:
+	URL : https://activork-new.herokuapp.com/mobile/get_details/
+	Type : POST
+	Paramter : device_id, latitude,longitude,interests
+	Response : "interests updated"
+
+3. Without signup update location:
+	URL : https://activork-new.herokuapp.com/mobile/get_details/
+	Type : POST
+	Paramter : device_id, latitude,longitude
+	Response : "interests updated"
+
+4. With Signup location:
+	URL : https://activork-new.herokuapp.com/mobile/get_info/
+	Type : POST
+	Paramter : latitude,longitude, session_id(header)
+	Response : "success"
+	
+5. With signup interests:
+	URL : https://activork-new.herokuapp.com/mobile/get_info/
+	Type : POST
+	Paramter : latitude,longitude,interests,session_id(header)
+	Response : "interests updated"
+
+6. With signup update location:
+	URL : https://activork-new.herokuapp.com/mobile/get_info/
+	Type : POST
+	Paramter : latitude,longitude, session_id(header)
+	Response : "interests updated"
+
+
+7. Fill profile info:
+	URL : https://activork-new.herokuapp.com/mobile/fill_userprofile/
+	Type : POST
+	Parameter : age,profile_image,designation,working_at,channels(comma seperated list),about,college, session_id(header)
+	Response : "success"
+
+8. Update profile:
+	URL : https://activork-new.herokuapp.com/mobile/fill_userprofile/
+	Type : POST
+	Parameter : key to be updated like (age,profile_image,channels), session_id(header)
+	Response : "updated profile"
+
+
+9. Update status:
+	URL : https://activork-new.herokuapp.com/mobile/update_status/
+	TYPE : POST
+	Parameter : status,public(1 0r 0)(optional), session_id(header)
+
+
+10. Like an article:
+	URL : https://activork-new.herokuapp.com/mobile/like_article/
+	TYPE : POST
+	Parameter : article_id,session_id(header)
+	Response : "success"
+
+
+11. Like an event:
+	URL : https://activork-new.herokuapp.com/mobile/like_event/
+	TYPE : POST
+	Parameter : event_id,session_id(header)
+	Response : "success"
+
+12. Rate an article:
+	URL : https://activork-new.herokuapp.com/mobile/rate_article/
+	TYPE : POST
+	Parameter : article_id,rating(float),session_id(header)
+	Response : success
+
+
+13. Going on event:
+	URL : https://activork-new.herokuapp.com/mobile/rate_article/
+	TYPE : POST
+	Parameter : event_id,session_id(header)
+	Response : success
+
+
+14. Read Event Comments:
+	URL : http://127.0.0.1:8000/mobile/comment_on_event/?event_id=<event_id>
+	TYPE : GET
+	Parameters :event_id in url, session_id(header)
+	Response : All Comments
+
+15. Read Article Comments:
+	URL : http://127.0.0.1:8000/mobile/comment_on_article/?article_id=<article_id>
+	TYPE : GET
+	Parameters :article_id in url, session_id(header)
+	Response : All Comments
+
+
+16. Comment on Events:
+	URL : http://127.0.0.1:8000/mobile/comment_on_event/
+	TYPE : POST
+	Parameters :event_id,comment, session_id(header)
+	Response : All Comments
+
+17. Comment on Article:
+	URL : http://127.0.0.1:8000/mobile/comment_on_article/
+	TYPE : POST
+	Parameters :article_id,comment, session_id(header)
+	Response : All Comments
+
+18. Follow User:
+	URL : http://127.0.0.1:8000/mobile/follow_user/
+	TYPE : POST
+	Parameters : followed_by(id of user following), session_id(header)
+	Response : "follow"
+
+19. UnFollow User:
+	URL : http://127.0.0.1:8000/mobile/unfollow_user/
+	TYPE : POST
+	Parameters : unfollowed_by(id of user following), session_id(header)
+	Response : "unfollow"

@@ -1,0 +1,24 @@
+1.   Signup By Email
+2.   Signup By Social Account(Facebook)
+3.   Login
+4.   Password Reset
+5.   Forgot Password
+6.   Reset Password
+7.   Without Signup get user location
+8.   Without signup get user device id
+9.   Without signup get user interests
+53. Update location without signup
+54. Update location with signup
+10.  Signup get user location
+11.  Signup get user interests
+55. user profile info
+15.  Update status
+16.  Like Article
+17.  Like Event
+37.  Edit Profile
+18.  Rate Article
+21.  Going on Event
+27.  Read Comments(Article)
+28.  Read Comment(Event)
+19.  Comment on Article
+20.  Comment on Event
