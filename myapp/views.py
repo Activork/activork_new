@@ -763,8 +763,10 @@ def mobile_get_details(request):
 					interests_key.append("item_key3")
 				elif i == "Hobbies":
 					interests_key.append("item_key4")
-				else:
+				elif i == "Momentum":
 					interests_key.append("item_key5")
+				else:
+					return Response({"error":"Please select a valid channel"})
 
 			interests_key = ",".join(interests_key)
 

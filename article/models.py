@@ -31,6 +31,7 @@ class Article(models.Model):
 	interest = MultiSelectField(choices=MY_CHOICES,default='item_key1')
 	sequence = models.IntegerField(default=0)
 	tags=models.TextField(blank=True)
+	source = models.URLField(blank=True,null=True)
 
 	def __unicode__(self):
 		return self.name

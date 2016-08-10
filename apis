@@ -44,6 +44,33 @@
 	Parametres	:	new_password
 	Response	:	"Changed Sucessfully"
 
+				________________09/10/2016______________
+
+
+7. Without signup location:
+	URL : https://activork-new.herokuapp.com/mobile/get_details/
+	Type : POST
+	Paramter : device_id, latitude,longitude
+	Response : "success"
+
+8. Without signup interests:
+	URL : https://activork-new.herokuapp.com/mobile/get_details/
+	Type : POST
+	Paramter : device_id, latitude,longitude,interests
+	Response : "interests updated"
+
+9. Without signup update location:
+	URL : https://activork-new.herokuapp.com/mobile/get_details/
+	Type : POST
+	Paramter : device_id, latitude,longitude
+	Response : "interests updated"
+
+10. Without signup get article,event data
+	URL : https://activork-new.herokuapp.com/mobile/earlier_home/?device_id=<device_id>
+	Type : GET
+	Paramter : None
+	Response :  all_event: for event details
+				all_artilce: for article details
 
 
 

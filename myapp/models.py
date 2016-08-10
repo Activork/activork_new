@@ -94,7 +94,7 @@ class Event(models.Model):
 	hangout = models.ForeignKey(Hangout)
 	cover_pic = models.ImageField(upload_to="cover_pic")
 	name = models.TextField()
-	organizer = models.OneToOneField(MyUser)
+	organizer = models.ForeignKey(MyUser)
 	datetime = models.DateTimeField(blank=True)
 	about = models.TextField()
 	interest = MultiSelectField(choices=MY_CHOICES,default='item_key1')
